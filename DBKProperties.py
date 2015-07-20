@@ -183,14 +183,16 @@ class DBKHoekProp(DBKIntProp):
         super(DBKHoekProp, self).__init__(name, location, shapefile, fieldname)
         self._correction = correction
 
+    # Converteer van geographic naar aritmetic.
     def value(self, shaperecord):
         v = super(DBKHoekProp, self).value(shaperecord)
         if v:
-            v = v + self._correction
-            if v < -360:
-                v = v + 360
-            elif v > 360:
-                v = v - 360
+##            v = v + self._correction
+##            if v < -360:
+##                v = v + 360
+##            elif v > 360:
+##                v = v - 360
+            v = 360 - ((v + 270) % 360) - self._correction
             return v
         return None
 
@@ -548,7 +550,7 @@ class DBKBWVoorzProp(DBKMultiProp):
         self.addProp(DBKSymbProp("namespace", location, shapefile, typefldname, domein, "namespace"))
         self.addProp(DBKSymbProp("categorie", location, shapefile, typefldname, domein, "categorie"))
         self.addProp(DBKMultiFieldProp("aanvullendeInformatie", location, shapefile, [omschrfldname, bijzfldname]))
-        self.addProp(DBKHoekProp("hoek", location, shapefile, hoekfldname, -81))
+        self.addProp(DBKHoekProp("hoek", location, shapefile, hoekfldname, 90))
         self.addProp(DBKIntProp("radius", location, shapefile, radiusfldname))
         self.addProp(DBKGeomProp())
 
@@ -614,7 +616,7 @@ class DBKTekstProp(DBKMultiProp):
         super(DBKTekstProp, self).__init__(name, location, shapefile, joinfldname)
 
         self.addProp(DBKStrProp("tekst", location, shapefile, tekstfldname)),
-        self.addProp(DBKHoekProp("hoek", location, shapefile, hoekfldname, -90))
+        self.addProp(DBKHoekProp("hoek", location, shapefile, hoekfldname))
         self.addProp(DBKIntProp("schaal", location, shapefile, schaalfldname))
         self.addProp(DBKGeomProp())
 
