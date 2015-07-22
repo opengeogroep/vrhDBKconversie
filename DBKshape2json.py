@@ -73,7 +73,7 @@ def main():
         if g.writeLog:
             WriteLogTxt(g.logFilename, LogStart())
 
-        # CreÃƒÂ«er de domeinen.
+        # CreÃƒÆ’Ã‚Â«er de domeinen.
         DtypeBrandcomp = DBKDBrandcompartiment()
         DtypeBrandweervoorz = DBKDBrandweervoorziening()
         DtypeGevaarlijkeStof = DBKDGevaarlijkestof()
@@ -127,7 +127,7 @@ def main():
                             .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, "GEVAARLIJKE_STOFFEN", "DBK_OBJECT", "STOFNAAM", "GEVI_CODE", "VN_NUMMER", "SYMBOOLCOD", "HOEVEELHEI", "BIJZONDERH", DtypeGevaarlijkeStof))
                             .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, "GEVAREN", "DBK_OBJECT", "SOORT_GEVA", None, None, "SYMBOOLCOD", None, "BIJZONDERH", DtypeGevaarlijkeStof)),
                         DBKListProp("hulplijn")
-                            .addProp(DBKHulplijnDomProp("hulplijn", g.shapefileLocation, "DBK_Lijn", "DBK_OBJECT", "TYPE", "BIJZONDERH", "OPMERKINGE", DtypeHulplijn))
+                            .addProp(DBKHulplijnDomProp("hulplijn", g.shapefileLocation, "DBK_LIJN", "DBK_OBJECT", "TYPE", "BIJZONDERH", "OPMERKINGE", DtypeHulplijn))
                             .addProp(DBKHulplijnConstProp("hulplijn", g.shapefileLocation, "SLAGBOOM", "DBK_OBJECT", "BIJZONDERH", "Bbarrier"))
                             .addProp(DBKHulplijnConstProp("hulplijn", g.shapefileLocation, "AANPIJLING", "DBK_OBJECT", "BIJZONDERH", "Line")),
                         DBKListProp("tekstobject")
@@ -159,7 +159,7 @@ def main():
         DBKfeatGeomProp = DBKGeomCentroidProp()
 
         # Lees de shapefile met DBKObjecten.
-        dbkobjectReader = shapefile.Reader(os.path.join(g.shapefileLocation, "DBK_Object.shp"))
+        dbkobjectReader = shapefile.Reader(os.path.join(g.shapefileLocation, "DBK_OBJECT.shp"))
 
         # Haal de attribuutvelden op van de DBKObjecten-shapefile.
         dbkobjectfields = dbkobjectReader.fields[1:]
@@ -169,7 +169,7 @@ def main():
 
 
         # Lees de shapefile met panden.
-        pandReader = shapefile.Reader(os.path.join(g.shapefileLocation, "pand.shp"))
+        pandReader = shapefile.Reader(os.path.join(g.shapefileLocation, "PAND.shp"))
 
         # Haal de attribuutvelden op van de panden-shapefile.
         pandfields = pandReader.fields[1:]
