@@ -73,7 +73,7 @@ def main():
         if g.writeLog:
             WriteLogTxt(g.logFilename, LogStart())
 
-        # CreÃƒÆ’Ã‚Â«er de domeinen.
+        # CreÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â«er de domeinen.
         DtypeBrandcomp = DBKDBrandcompartiment()
         DtypeBrandweervoorz = DBKDBrandweervoorziening()
         DtypeGevaarlijkeStof = DBKDGevaarlijkestof()
@@ -95,17 +95,17 @@ def main():
                         DBKStrProp("gebruikstype", g.shapefileLocation, "PAND", "GEBRUIKSDO"),
                         DBKListProp("verblijf")
                            #Dag
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "PERSONEEL_", "Personeel", True, "09:00:00", "17:00:00", True))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "BEZOEKERS_", "Bezoekers", True, "09:00:00", "17:00:00", True))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "SLAAPPLAAT", "Slaapplaatsen", True, "09:00:00", "17:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "PERSONEEL_", "PERSONEE_2", "Personeel", True, "09:00:00", "17:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "BEZOEKERS_", "BEZOEKER_2", "Bezoekers", True, "09:00:00", "17:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "SLAAPPLAAT", "SLAAPPLA_3", "Slaapplaatsen", True, "09:00:00", "17:00:00", True))
                           #Nacht
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "PERSONEEL1", "Personeel", True, "17:00:00", "09:00:00", True))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "BEZOEKERS1", "Bezoekers", True,  "17:00:00", "09:00:00", True))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "SLAAPPLA_1", "Slaapplaatsen", True,  "17:00:00", "09:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "PERSONEEL1", "PERSONEE_2", "Personeel", True, "17:00:00", "09:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "BEZOEKERS1", "BEZOEKER_2", "Bezoekers", True,  "17:00:00", "09:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "SLAAPPLA_1", "SLAAPPLA_3", "Slaapplaatsen", True,  "17:00:00", "09:00:00", True))
                           #Weekend
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "PERSONEE_1", "Personeel", True, "17:00:00", "09:00:00", False))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "BEZOEKER_1", "Bezoekers", True,  "17:00:00", "09:00:00", False))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "SLAAPPLA_2", "Slaapplaatsen", True,  "17:00:00", "09:00:00", False)),
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "PERSONEE_1", "PERSONEE_2", "Personeel", True, "17:00:00", "09:00:00", False))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "BEZOEKER_1", "BEZOEKER_2", "Bezoekers", True,  "17:00:00", "09:00:00", False))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "SLAAPPLA_2", "SLAAPPLA_3", "Slaapplaatsen", True,  "17:00:00", "09:00:00", False)),
                         DBKListProp("adres")
                           .addProp(DBKAdresProp("adres", g.shapefileLocation, "PAND", "ADRES", "PLAATS")),
                         DBKListProp("afwijkendebinnendekking")
@@ -133,7 +133,33 @@ def main():
                         DBKListProp("tekstobject")
                             .addProp(DBKTekstProp("tekst", g.shapefileLocation, "TEKST", "DBK_OBJECT", "TEKST", "SYMBOOLHOE", "SYMBOOLGRO")),
                         DBKListProp("toegangterrein")
-                            .addProp(DBKToegangTerreinProp("toegangterrein", g.shapefileLocation, "AANRIJROUTE", "DBK_OBJECT", "BIJZONDERH"))
+                            .addProp(DBKToegangTerreinProp("toegangterrein", g.shapefileLocation, "AANRIJROUTE", "DBK_OBJECT", "BIJZONDERH")),
+                        DBKListProp("bijzonderheid")
+                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, "PAND", "BIJZONDERH", 1))
+                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, "PAND", "BIJZ_HEDEN", 2))
+                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, "PAND", "BIJZ_HED_1", 3))
+                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, "PAND", "BIJZ_HED_2", 4)),
+                        DBKStrProp("sleutelbuisInformatie", g.shapefileLocation, "DBK_OBJECT", "SLEUTELBUI"),
+                        DBKStrProp("brandmeldpaneel", g.shapefileLocation, "DBK_OBJECT", "BRANDMELDP"),
+                        DBKStrProp("brandmeldcentrale", g.shapefileLocation, "DBK_OBJECT", "BRANDMELDC"),
+                        DBKStrProp("aanvalsplan", g.shapefileLocation, "PAND", "AANVALSPLA"),
+                        DBKStrProp("bijzonderheidAlgemeen", g.shapefileLocation, "DBK_OBJECT", "BIJZONDERH"),
+                        DBKStrProp("liften", g.shapefileLocation, "PAND", "LIFTEN"),
+                        DBKStrProp("dakcontrstuctie", g.shapefileLocation, "PAND", "DAKCONSTRU"),
+                        DBKStrProp("compartimenten", g.shapefileLocation, "PAND", "COMPARTIME"),
+                        DBKStrProp("bijzonderheidBouwkundig", g.shapefileLocation, "PAND", "BIJZ_BOUWK"),
+                        DBKStrProp("afsluiterGas", g.shapefileLocation, "DBK_OBJECT", "AFSLUITER_"),
+                        DBKStrProp("afsluiterElectra", g.shapefileLocation, "DBK_OBJECT", "AFSLUITER1"),
+                        DBKStrProp("afsluiterNeon", g.shapefileLocation, "DBK_OBJECT", "AFSLUITE_1"),
+                        DBKStrProp("afsluiterCV", g.shapefileLocation, "DBK_OBJECT", "AFSLUITE_2"),
+                        DBKStrProp("luchtbehandeling", g.shapefileLocation, "DBK_OBJECT", "LUCHTBEHAN"),
+                        DBKStrProp("bijzonderheidAfsluiters", g.shapefileLocation, "DBK_OBJECT", "BIJZONDE_1"),
+                        DBKStrProp("ontruimingsinstallatie", g.shapefileLocation, "PAND", "ONTRUIMING"),
+                        DBKStrProp("ontruimingsplan", g.shapefileLocation, "PAND", "ONTRUIMI_1"),
+                        DBKStrProp("verzamelplaats", g.shapefileLocation, "PAND", "VERZAMELPL"),
+                        DBKStrProp("bijzonderheidAanwezigheid", g.shapefileLocation, "PAND", "BIJZONDE_1"),
+
+
         ]
 
         # Definieer DBKfeature properties
@@ -177,7 +203,11 @@ def main():
         # Bepaal voor alle DBKObject-properties de veldindex bij de pand-velden .
         for item in DBKObjectDef:
             if isinstance(item, DBKProp):
-                item.setFieldindex(pandfields)
+                if item.shapefilename == "PAND":
+                    item.setFieldindex(pandfields)
+                else:
+                    item.setFieldindex(dbkobjectfields)
+
 
         # Bepaal voor alle DBKfeature-properties de veldindex bij de pand-velden .
         for item in DBKFeaturePropDef:
@@ -218,7 +248,11 @@ def main():
                     elif isinstance(item, DBKListProp):
                         dictDBKObject.update({item.name: item.value(srHoofdpand, pandfields)})
                     else:
-                        dictDBKObject.update({item.name: item.value(srHoofdpand)})
+                        if item.shapefilename == "PAND":
+                            dictDBKObject.update({item.name: item.value(srHoofdpand)})
+                        else:
+                            dictDBKObject.update({item.name: item.value(srDBKObject)})
+
                 # Schrijf het DBKObject in een json-file.
                 dbkobjectJSON = open(os.path.join(g.dbkobjectOutputLocation, str(joinID) + '.json'), "w")
                 # pretty

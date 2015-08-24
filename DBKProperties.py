@@ -31,6 +31,7 @@ class DBKProp(object):
     def __init__(self, name, location=None, shapefile=None, fieldname=None):
         self.name = name
         self.shapefile = self.setShapefile(location, shapefile)
+        self.shapefilename = shapefile
         self.fieldname = fieldname
         self.fieldindex = -1
         self._value = None
@@ -77,6 +78,7 @@ class DBKProp(object):
 # DBKListProp: Resulteert in een list gebaseerd op meerdere velden in een record.
 class DBKListProp(DBKProp):
     def __init__(self, name):
+        self.shapefilename = "PAND"
         self.name = name
         self.isList = True
         self._propList = []
@@ -425,7 +427,8 @@ class DBKMultiProp(DBKSamengesteldProp):
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 class DBKVerblijfProp(DBKProp):
-    def __init__(self, name, location, shapefile=None, fieldname=None, typegroep=None,
+    def __init__(self, name, location, shapefile=None, fieldname=None,
+                 infofldname=None, typegroep=None,
                  zelfredzaam=True,begintijd=None,eindtijd=None, doordeweeks=True):
         super(DBKVerblijfProp, self).__init__(name, location, shapefile, fieldname)
 
@@ -446,9 +449,12 @@ class DBKVerblijfProp(DBKProp):
         if not zelfredzaam:
             self._aantalNZR = DBKStrProp("aantal", location, shapefile, fieldname)
 
+        self._bijzonderheden = DBKStrProp("bijzonderheden", location, shapefile, infofldname)
+
     def setFieldindex(self, fields):
         super(DBKVerblijfProp,self).setFieldindex(fields)
         self._aantal.setFieldindex(fields)
+        self._bijzonderheden.setFieldindex(fields)
         if not self._zelfredzaam:
             self._aantalNZR.setFieldindex(fields)
 
@@ -457,6 +463,7 @@ class DBKVerblijfProp(DBKProp):
         if v:
             verblijf = dict()
             verblijf.update({self._aantal.name: self._aantal.value(shaperecord)})
+            verblijf.update({self._bijzonderheden.name: self._bijzonderheden.value(shaperecord)})
             if not self._zelfredzaam:
                 verblijf.update({self._aantalNZR.name: self._aantalNZR.value(shaperecord)})
             else:
@@ -467,6 +474,54 @@ class DBKVerblijfProp(DBKProp):
             return verblijf
         else:
             return None
+
+###-------------------------------------------------------------------------------
+##class DBKVerblijfProp(DBKSamengesteldProp):
+##    def __init__(self, name, location, shapefile=None, fieldname=None, infofldname=None,
+##                 typegroep=None,
+##                 zelfredzaam=True,begintijd=None,eindtijd=None, doordeweeks=True):
+##        super(DBKVerblijfProp, self).__init__(name, location, shapefile, fieldname)
+##
+##        self.addProp(DBKConstProp("typeAanwezigheidsgroep", typegroep))
+##        self.addProp(DBKConstProp("tijdvakBegintijd", begintijd))
+##        self.addProp(DBKConstProp("tijdvakEindtijd", eindtijd))
+##        self.addProp(DBKConstProp("maandag", doordeweeks))
+##        self.addProp(DBKConstProp("dinsdag", doordeweeks))
+##        self.addProp(DBKConstProp("woensdag", doordeweeks))
+##        self.addProp(DBKConstProp("donderdag", doordeweeks))
+##        self.addProp(DBKConstProp("vrijdag", doordeweeks))
+##        self.addProp(DBKConstProp("zaterdag", not doordeweeks))
+##        self.addProp(DBKConstProp("zondag", not doordeweeks))
+##        self.addProp(DBKStrProp("bijzonderheden", location, shapefile, infofldname))
+##
+##
+##        self._zelfredzaam = zelfredzaam
+##
+##        self._aantal = DBKStrProp("aantal", location, shapefile, fieldname)
+##        if not zelfredzaam:
+##            self._aantalNZR = DBKStrProp("aantal", location, shapefile, fieldname)
+##
+##    def setFieldindex(self, fields):
+##        super(DBKVerblijfProp,self).setFieldindex(fields)
+##        self._aantal.setFieldindex(fields)
+##        if not self._zelfredzaam:
+##            self._aantalNZR.setFieldindex(fields)
+##
+##    def value(self, shaperecord):
+##        v = self._aantal.value(shaperecord)
+##        if v:
+##            verblijf = super(DBKVerblijfProp,self).value(shaperecord)
+##            verblijf.update({self._aantal.name: self._aantal.value(shaperecord)})
+##            if not self._zelfredzaam:
+##                verblijf.update({self._aantalNZR.name: self._aantalNZR.value(shaperecord)})
+##            else:
+##                verblijf.update({"aantalNietZelfredzaam": ""})
+##
+####            for item in self._constProps:
+####                verblijf.update({item.name: item.value})
+##            return verblijf
+##        else:
+##            return None
 
 #-------------------------------------------------------------------------------
 class DBKAdresProp(DBKSamengesteldProp):
@@ -638,6 +693,15 @@ class DBKToegangTerreinProp(DBKMultiProp):
         self.addProp(DBKConstProp("naamRoute", None))
         self.addProp(DBKStrProp("aanvullendeInformatie", location, shapefile, infofldname))
         self.addProp(DBKGeomProp())
+
+#-------------------------------------------------------------------------------
+class DBKBijzonderheidProp(DBKSamengesteldProp):
+    def __init__(self, name, location, shapefile, infofldname, volgnr):
+        super(DBKBijzonderheidProp, self).__init__(name, location, shapefile)
+
+        self.addProp(DBKConstProp("seq", volgnr))
+        self.addProp(DBKConstProp("soort", "Algemeen"))
+        self.addProp(DBKStrProp("tekst", location, shapefile, infofldname))
 
 #-------------------------------------------------------------------------------
 if __name__ == '__main__':
