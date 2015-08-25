@@ -158,11 +158,11 @@ class DBKDHulplijn(DBKDomein):
     def __init__(self):
         d = {"Binnenmuur":{"typeHulplijn":"Line"},
         "Aanrijroute":{"typeHulplijn":"Line"},
-        "Blusleiding":{"typeHulplijn":"Conduit"},
+        "Blusleiding":{"typeHulplijn":"DBL Leiding"},
         "Hekwerk":{"typeHulplijn":"Fence"},
-        "Inzetdiepte":{"typeHulplijn":"Ã¢â‚¬â€œ"},
+        "Inzetdiepte":{"typeHulplijn":""},
         "Schadecirkel":{"typeHulplijn":"HEAT"},
-        "Vluchtroute":{"typeHulplijn":"Ã¢â‚¬â€œ"},
+        "Vluchtroute":{"typeHulplijn":""},
         "Slagboom":{"typeHulplijn":"Bbarrier"},
         "Aanpijling":{"typeHulplijn":"Line"}}
 
