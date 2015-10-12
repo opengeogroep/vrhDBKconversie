@@ -73,9 +73,10 @@ def main():
         if g.writeLog:
             WriteLogTxt(g.logFilename, LogStart())
 
-        # CreÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â«er de domeinen.
+        # CreÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«er de domeinen.
         DtypeBrandcomp = DBKDBrandcompartiment()
         DtypeBrandweervoorz = DBKDBrandweervoorziening()
+        DtypeOpstelplaats = DBKDOpstelplaats()
         DtypeGevaarlijkeStof = DBKDGevaarlijkestof()
         DtypeHulplijn = DBKDHulplijn()
 
@@ -116,9 +117,10 @@ def main():
                             .addProp(DBKBrandCompProp("brandcompartiment",  g.shapefileLocation, "COMPARTIMENTERING", "DBK_OBJECT", "SYMBOOLCOD", "BIJZONDERH", DtypeBrandcomp)),
                         DBKListProp("brandweervoorziening")
                             .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "BRANDWEERVOORZIENING", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
-                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "OPSTELPLAATS", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
+                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "OPSTELPLAATS", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeOpstelplaats))
                             .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "TOEGANG_PAND", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
-                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "TOEGANG_TERREIN", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz)),
+                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "TOEGANG_TERREIN", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
+                            .addProp(DBKHellingbaanProp("brandweervoorziening", g.shapefileLocation, "HELLINGBAAN", "DBK_OBJECT", "Falck36", "BIJZONDERH", "SYMBOOLGRO", DtypeBrandweervoorz)),
                         DBKListProp("contact")
                           .addProp(DBKContactProp("contact", g.shapefileLocation, "PAND", "CONTACT_FU", "CONTACT_NA", "CONTACT_TE")),
                         DBKListProp("foto")

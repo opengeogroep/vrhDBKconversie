@@ -5,6 +5,13 @@
 # Author:      Anke Keuren (ARIS B.V.)
 #
 # Created:     25-06-2015
+# Changes:     12-10-2015, AK:
+#              - Domein voor opstelplaats toegevoegd en codes Tb1.008, Tb1.009 en
+#                Tb1.010 daarin gezet. Dit ivm dubbel voorkomen van Tb1.010 in
+#                de Haaglanden-database. Tb1.010 wordt voor opstelplaats redvoertuig
+#                en voor Schacht gebruikt. Door het domein van opstelplaatsen
+#                apart te definieren, kan Tb1.010 voor Schacht worden vertaald
+#                naar code Falck11.
 #-------------------------------------------------------------------------------
 
 class DBKDomein(object):
@@ -28,8 +35,6 @@ class DBKDBrandweervoorziening(DBKDomein):
     def __init__(self):
         d = {"Tbk7.004":{"symboolcode":"Tbk7.004","naam":"Lift","namespace":"NEN1414","categorie":"objectinformatie"},
 		"Tw01":{"symboolcode":"Tw01","naam":"Algemeen gevaar","namespace":"NEN1414","categorie":"repressief"},
-		"Tb1.008":{"symboolcode":"Tb1.008","naam":"Opstelplaats eerste blusvoertuig","namespace":"NEN1414","categorie":"repressief"},
-		"Tb1.009":{"symboolcode":"Tb1.009","naam":"Opstelplaats overige blusvoertuigen","namespace":"NEN1414","categorie":"repressief"},
 		"Trap2":{"symboolcode":"Trap2","naam":"Trap","namespace":"Other","categorie":"preventief"},
 		"Tb1.005":{"symboolcode":"Tb1.005","naam":"Nevenbrandweerpaneel","namespace":"NEN1414","categorie":"preventief"},
 		"Tn06":{"symboolcode":"Tn06","naam":"Verzamelplaats","namespace":"NEN1414","categorie":"preventief"},
@@ -68,7 +73,7 @@ class DBKDBrandweervoorziening(DBKDomein):
 		"Falck14":{"symboolcode":"Falck14","naam":"Brandweervoorziening","namespace":"Other","categorie":"preparatief"},
 		"Falck15":{"symboolcode":"Falck15","naam":"PGS 15 Kluis","namespace":"Other","categorie":"preparatief"},
 		"Falck12":{"symboolcode":"Falck12","naam":"Rook Warmte Afvoerluiken","namespace":"Other","categorie":"preventief"},
-		"Falck11":{"symboolcode":"Falck11","naam":"Schacht of kanaal","namespace":"Other","categorie":"objectinformatie"},
+		"Tb1.010":{"symboolcode":"Falck11","naam":"Schacht of kanaal","namespace":"Other","categorie":"objectinformatie"},
 		"Tb1.007a":{"symboolcode":"Tb.1007a","naam":"Afname Droge Buisleiding","namespace":"NEN1414","categorie":"preventief"},
 		"Tb4.001":{"symboolcode":"Tb4.001","naam":"Hydrant","namespace":"NEN1414","categorie":"preparatief"},
 		"Tb4.002":{"symboolcode":"Tb4.002","naam":"Ondergrondse brandkraan","namespace":"NEN1414","categorie":"preparatief"},
@@ -85,10 +90,8 @@ class DBKDBrandweervoorziening(DBKDomein):
         "Tb2.024":{"symboolcode":"Tb2.024","naam":"Afsluiter omloopleiding", "namespace": "NEN1414","categorie":"preparatief"},
         "Tb2.025":{"symboolcode":"Tb2.025","naam":"Afsluiter LPG", "namespace": "NEN1414","categorie":"preparatief"},
         "Tb2.026":{"symboolcode":"Tb2.026","naam":"Afsluiter schuimvormend middel", "namespace": "NEN1414","categorie":"preparatief"},
-        "Tb1.010":{"symboolcode":"Tb1.010","naam":"Schacht/kanaal", "namespace": "NEN1414","categorie":"objectinformatie"},
         "Tb1.011":{"symboolcode":"Tb1.011","naam":"Gas detectiepaneel", "namespace": "NEN1414","categorie":"preventief"},
         "Tb4.005":{"symboolcode":"Tb4.005","naam":"Gesprinklerde ruimte", "namespace": "NEN1414","categorie":""},
-        "Tb1.010":{"symboolcode":"Tb1.010","naam":"Opstelplaats redvoertuig", "namespace": "NEN1414","categorie":"repressief"},
         "Tn05":{"symboolcode":"Tn05","naam":"Nooduitgang", "namespace": "NEN1414","categorie":""},
         "Tn504":{"symboolcode":"Tr504","naam":"Indicator/flitslicht", "namespace": "NEN1414","categorie":""},
         "To1.001":{"symboolcode":"To1.001","naam":"Trap", "namespace": "NEN1414","categorie":"preventief"},
@@ -100,10 +103,19 @@ class DBKDBrandweervoorziening(DBKDomein):
         "TbeRIJ":{"symboolcode":"TbeRIJ","naam":"Berijdbaar", "namespace": "NEN1414","categorie":""},
         "Tbe06":{"symboolcode":"Tbe06","naam":"Parkeerplaats", "namespace": "NEN1414","categorie":""},
         "TbeBus":{"symboolcode":"TbeBus","naam":"Bussluis", "namespace": "NEN1414","categorie":""},
-        "TbeHoogte":{"symboolcode":"TbeHoogte","naam":"Doorrijhoogte", "namespace": "NEN1414","categorie":""}
+        "TbeHoogte":{"symboolcode":"TbeHoogte","naam":"Doorrijhoogte", "namespace": "NEN1414","categorie":""},
+        "Falck36":{"symboolcode":"Falck36","naam":"Hellingbaan","namespace":"Other","categorie":"objectinformatie"}
 }
 
         super(DBKDBrandweervoorziening, self).__init__(d)
+
+class DBKDOpstelplaats(DBKDomein):
+    def __init__(self):
+        d = {"Tb1.008":{"symboolcode":"Tb1.008","naam":"Opstelplaats eerste blusvoertuig","namespace":"NEN1414","categorie":"repressief"},
+		"Tb1.009":{"symboolcode":"Tb1.009","naam":"Opstelplaats overige blusvoertuigen","namespace":"NEN1414","categorie":"repressief"},
+        "Tb1.010":{"symboolcode":"Tb1.010","naam":"Opstelplaats redvoertuig", "namespace": "NEN1414","categorie":"repressief"}}
+
+        super(DBKDOpstelplaats, self).__init__(d)
 
 class DBKDBrandcompartiment(DBKDomein):
     def __init__(self):

@@ -220,6 +220,28 @@ class DBKSymbProp(DBKStrProp):
         return None
 
 #-------------------------------------------------------------------------------
+# DBKSymbProp: Symboolcode property. In Haaglanden zijn symboolcodes met een
+#              komma opgenomen. Deze worden t.b.v. DBK vervangen door een punt.
+class DBKSymbConstProp(DBKProp):
+    def __init__(self, name, location, shapefile, symboolcode, domein=None, domeinfldname=None):
+        super(DBKSymbConstProp, self).__init__(name, location, shapefile, None)
+        self._symboolcode = symboolcode
+        self._domein = domein
+        self._domeinfldname = domeinfldname
+
+    def value(self, shaperecord):
+        s = self._symboolcode
+        if s:
+            try:
+                if self._domein:
+                    return self._domein.value(s.replace(",", "."), self._domeinfldname)
+                else:
+                    return s.replace(",", ".")
+            except:
+                return None
+        return None
+
+#-------------------------------------------------------------------------------
 class DBKGeomProp(DBKProp):
     def __init__(self):
         super(DBKGeomProp, self).__init__("geometry")
@@ -596,7 +618,8 @@ class DBKBrandCompProp(DBKMultiProp):
 #-------------------------------------------------------------------------------
 # DBKBWVoorzProp: Brandweervoorziening
 class DBKBWVoorzProp(DBKMultiProp):
-    def __init__(self, name, location, shapefile, joinfldname, typefldname, omschrfldname, bijzfldname, hoekfldname, radiusfldname, domein=None):
+    def __init__(self, name, location, shapefile, joinfldname, typefldname, omschrfldname,
+                 bijzfldname, hoekfldname, radiusfldname, domein=None):
         super(DBKBWVoorzProp, self).__init__(name, location, shapefile, joinfldname)
 
         #self.addProp(DBKSymbProp("typeVoorziening", location, shapefile, typefldname))
@@ -606,6 +629,23 @@ class DBKBWVoorzProp(DBKMultiProp):
         self.addProp(DBKSymbProp("categorie", location, shapefile, typefldname, domein, "categorie"))
         self.addProp(DBKMultiFieldProp("aanvullendeInformatie", location, shapefile, [omschrfldname, bijzfldname]))
         self.addProp(DBKHoekProp("hoek", location, shapefile, hoekfldname, 90))
+        self.addProp(DBKIntProp("radius", location, shapefile, radiusfldname))
+        self.addProp(DBKGeomProp())
+
+#-------------------------------------------------------------------------------
+# DBKBWVoorzProp: Brandweervoorziening
+class DBKHellingbaanProp(DBKMultiProp):
+    def __init__(self, name, location, shapefile, joinfldname, symboolcode,
+                 bijzfldname, radiusfldname, domein):
+        super(DBKHellingbaanProp, self).__init__(name, location, shapefile, joinfldname)
+
+        self.addProp(DBKSymbConstProp("typeVoorziening", location, shapefile, symboolcode, domein, "symboolcode"))
+        self.addProp(DBKSymbConstProp("naamVoorziening", location, shapefile, symboolcode, domein, "naam"))
+        self.addProp(DBKSymbConstProp("namespace", location, shapefile, symboolcode, domein, "namespace"))
+        self.addProp(DBKSymbConstProp("categorie", location, shapefile, symboolcode, domein, "categorie"))
+
+        self.addProp(DBKStrProp("aanvullendeInformatie", location, shapefile, bijzfldname))
+        self.addProp(DBKConstProp("hoek", 0))
         self.addProp(DBKIntProp("radius", location, shapefile, radiusfldname))
         self.addProp(DBKGeomProp())
 
