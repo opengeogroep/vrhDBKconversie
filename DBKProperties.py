@@ -5,12 +5,13 @@
 # Author:      Anke Keuren (ARIS B.V.)
 #
 # Created:     16-06-2015
+# Changes:     15-10-2015, AK:
+#              - Radius-property toegevoegd aan DBKGevaarStofProp.
 #-------------------------------------------------------------------------------
 
 import os, shapefile, datetime
 import DBKGlobals as g, DBKError as e
 from DBKUtils import *
-#from DBKMultiProperties import *
 
 #-------------------------------------------------------------------------------
 class DBKConstProp(object):
@@ -670,7 +671,8 @@ class DBKFotoProp(DBKSamengesteldProp):
 #-------------------------------------------------------------------------------
 # DBKGevaarStofProp: Gevaarlijke stof
 class DBKGevaarStofProp(DBKMultiProp):
-    def __init__(self, name, location, shapefile, joinfldname, naamfldname, gevifldname, UNfldname,  typefldname, hoeveelheidfldname, infofldname, domein=None):
+    def __init__(self, name, location, shapefile, joinfldname, naamfldname, gevifldname,
+                 UNfldname,  typefldname, hoeveelheidfldname, radiusfldname, infofldname, domein=None):
         super(DBKGevaarStofProp, self).__init__(name, location, shapefile, joinfldname)
 
         self.addProp(DBKStrProp("naamStof", location, shapefile, naamfldname))
@@ -679,6 +681,7 @@ class DBKGevaarStofProp(DBKMultiProp):
         self.addProp(DBKStrProp("hoeveelheid", location, shapefile, hoeveelheidfldname))
         #self.addProp(DBKSymbProp("symboolCode", location, shapefile, typefldname))
         self.addProp(DBKSymbProp("symboolCode", location, shapefile, typefldname, domein, "symboolcode"))
+        self.addProp(DBKIntProp("radius", location, shapefile, radiusfldname))
         self.addProp(DBKSymbProp("namespace", location, shapefile, typefldname, domein, "namespace"))
         self.addProp(DBKStrProp("aanvullendeInformatie", location, shapefile, infofldname))
         self.addProp(DBKGeomProp())

@@ -5,6 +5,9 @@
 # Author:      Anke Keuren (ARIS B.V.)
 #
 # Created:     11-06-2015
+# Changes:     15-10-2015, AK:
+#              - Centroid van DBKFeature bepaald aan de hand van het hoofdpand
+#                en niet meer van het DBKObject.
 #-------------------------------------------------------------------------------
 
 import sys, shapefile, datetime
@@ -73,7 +76,7 @@ def main():
         if g.writeLog:
             WriteLogTxt(g.logFilename, LogStart())
 
-        # CreÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«er de domeinen.
+        # CreÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«er de domeinen.
         DtypeBrandcomp = DBKDBrandcompartiment()
         DtypeBrandweervoorz = DBKDBrandweervoorziening()
         DtypeOpstelplaats = DBKDOpstelplaats()
@@ -126,8 +129,8 @@ def main():
                         DBKListProp("foto")
                           .addProp(DBKFotoProp("foto", g.shapefileLocation, "PAND", "FOTO", "FOTO")),
                         DBKListProp("gevaarlijkestof")
-                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, "GEVAARLIJKE_STOFFEN", "DBK_OBJECT", "STOFNAAM", "GEVI_CODE", "VN_NUMMER", "SYMBOOLCOD", "HOEVEELHEI", "BIJZONDERH", DtypeGevaarlijkeStof))
-                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, "GEVAREN", "DBK_OBJECT", "SOORT_GEVA", None, None, "SYMBOOLCOD", None, "BIJZONDERH", DtypeGevaarlijkeStof)),
+                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, "GEVAARLIJKE_STOFFEN", "DBK_OBJECT", "STOFNAAM", "GEVI_CODE", "VN_NUMMER", "SYMBOOLCOD", "HOEVEELHEI", "SYMBOOLGRO", "BIJZONDERH", DtypeGevaarlijkeStof))
+                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, "GEVAREN", "DBK_OBJECT", "SOORT_GEVA", None, None, "SYMBOOLCOD", None, "SYMBOOLGRO", "BIJZONDERH", DtypeGevaarlijkeStof)),
                         DBKListProp("hulplijn")
                             .addProp(DBKHulplijnDomProp("hulplijn", g.shapefileLocation, "DBK_LIJN", "DBK_OBJECT", "TYPE", "BIJZONDERH", "OPMERKINGE", DtypeHulplijn))
                             .addProp(DBKHulplijnConstProp("hulplijn", g.shapefileLocation, "SLAGBOOM", "DBK_OBJECT", "BIJZONDERH", "Bbarrier"))
@@ -282,7 +285,10 @@ def main():
                 dictDBKFeature.update({"properties": dictDBKFeatProp})
 
                 # De centroid wordt bepaald op basis van de DBKObject polygoon.
-                dictDBKFeature.update({DBKfeatGeomProp.name: DBKfeatGeomProp.value(srDBKObject)})
+                # 15-10-2015, AK: centroid bepalen op basis van hoofdpand.
+                #dictDBKFeature.update({DBKfeatGeomProp.name: DBKfeatGeomProp.value(srDBKObject)})
+                dictDBKFeature.update({DBKfeatGeomProp.name: DBKfeatGeomProp.value(srHoofdpand)})
+
 
                 # Zet het id (gelijk aan gid).
                 dictDBKFeature.update({"id": "DBKFeature.gid--" + str(teller)})
