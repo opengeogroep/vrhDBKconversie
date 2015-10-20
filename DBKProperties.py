@@ -46,7 +46,7 @@ class DBKProp(object):
         fullname = os.path.join(location, shapefile)
         fileName, fileExt = os.path.splitext(fullname)
         if fileExt.lower() == '':
-            fullname = fileName +'.shp'
+            fullname = fileName + g.shpExt
         elif fileExt.lower() != '.shp':
             raise e.ShapefileError(fullname)
 

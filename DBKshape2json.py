@@ -8,6 +8,8 @@
 # Changes:     15-10-2015, AK:
 #              - Centroid van DBKFeature bepaald aan de hand van het hoofdpand
 #                en niet meer van het DBKObject.
+#              20-10-2015, AK:
+#              Shapefilenamen in variabelen gezet.
 #-------------------------------------------------------------------------------
 
 import sys, shapefile, datetime
@@ -76,7 +78,7 @@ def main():
         if g.writeLog:
             WriteLogTxt(g.logFilename, LogStart())
 
-        # CreÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«er de domeinen.
+        # CreÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«er de domeinen.
         DtypeBrandcomp = DBKDBrandcompartiment()
         DtypeBrandweervoorz = DBKDBrandweervoorziening()
         DtypeOpstelplaats = DBKDOpstelplaats()
@@ -85,105 +87,105 @@ def main():
 
         # Definieer DBKobject properties
         DBKObjectDef = [
-                        DBKStrProp("identificatie", g.shapefileLocation, "PAND", "DBK_OBJECT"),
-                        DBKBoolProp("BHVaanwezig", g.shapefileLocation, "PAND", "AANWEZIG_1"),
-                        DBKDateProp("controleDatum", g.shapefileLocation, "PAND", "LAATSTE_CO"),
-                        DBKStrProp("formeleNaam", g.shapefileLocation, "PAND", "NAAM_PAND"),
-                        DBKStrProp("informeleNaam", g.shapefileLocation, "PAND", "INFORMELE_"),
-                        DBKStrProp("OMSnummer", g.shapefileLocation, "PAND", "OMS_NUMMER"),
-                        DBKStrProp("inzetprocedure", g.shapefileLocation, "PAND", "INZETPROCE"),
-                        DBKIntProp("laagsteBouwlaag", g.shapefileLocation, "PAND", "BOUWLAGENO"),
-                        DBKIntProp("hoogsteBouwlaag", g.shapefileLocation, "PAND", "BOUWLAGENB"),
-                        DBKStrProp("risicoklasse", g.shapefileLocation, "PAND", "RISICOKLAS"),
-                        DBKStrProp("gebouwconstructie", g.shapefileLocation, "PAND", "GEBOUWCONS"),
-                        DBKStrProp("gebruikstype", g.shapefileLocation, "PAND", "GEBRUIKSDO"),
+                        DBKStrProp("identificatie", g.shapefileLocation, g.PAND, "DBK_OBJECT"),
+                        DBKBoolProp("BHVaanwezig", g.shapefileLocation, g.PAND, "AANWEZIG_1"),
+                        DBKDateProp("controleDatum", g.shapefileLocation, g.PAND, "LAATSTE_CO"),
+                        DBKStrProp("formeleNaam", g.shapefileLocation, g.PAND, "NAAM_PAND"),
+                        DBKStrProp("informeleNaam", g.shapefileLocation, g.PAND, "INFORMELE_"),
+                        DBKStrProp("OMSnummer", g.shapefileLocation, g.PAND, "OMS_NUMMER"),
+                        DBKStrProp("inzetprocedure", g.shapefileLocation, g.PAND, "INZETPROCE"),
+                        DBKIntProp("laagsteBouwlaag", g.shapefileLocation, g.PAND, "BOUWLAGENO"),
+                        DBKIntProp("hoogsteBouwlaag", g.shapefileLocation, g.PAND, "BOUWLAGENB"),
+                        DBKStrProp("risicoklasse", g.shapefileLocation, g.PAND, "RISICOKLAS"),
+                        DBKStrProp("gebouwconstructie", g.shapefileLocation, g.PAND, "GEBOUWCONS"),
+                        DBKStrProp("gebruikstype", g.shapefileLocation, g.PAND, "GEBRUIKSDO"),
                         DBKListProp("verblijf")
                            #Dag
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "PERSONEEL_", "PERSONEE_2", "Personeel", True, "09:00:00", "17:00:00", True))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "BEZOEKERS_", "BEZOEKER_2", "Bezoekers", True, "09:00:00", "17:00:00", True))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "SLAAPPLAAT", "SLAAPPLA_3", "Slaapplaatsen", True, "09:00:00", "17:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, g.PAND, "PERSONEEL_", "PERSONEE_2", "Personeel", True, "09:00:00", "17:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, g.PAND, "BEZOEKERS_", "BEZOEKER_2", "Bezoekers", True, "09:00:00", "17:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, g.PAND, "SLAAPPLAAT", "SLAAPPLA_3", "Slaapplaatsen", True, "09:00:00", "17:00:00", True))
                           #Nacht
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "PERSONEEL1", "PERSONEE_2", "Personeel", True, "17:00:00", "09:00:00", True))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "BEZOEKERS1", "BEZOEKER_2", "Bezoekers", True,  "17:00:00", "09:00:00", True))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "SLAAPPLA_1", "SLAAPPLA_3", "Slaapplaatsen", True,  "17:00:00", "09:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, g.PAND, "PERSONEEL1", "PERSONEE_2", "Personeel", True, "17:00:00", "09:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, g.PAND, "BEZOEKERS1", "BEZOEKER_2", "Bezoekers", True,  "17:00:00", "09:00:00", True))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, g.PAND, "SLAAPPLA_1", "SLAAPPLA_3", "Slaapplaatsen", True,  "17:00:00", "09:00:00", True))
                           #Weekend
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "PERSONEE_1", "PERSONEE_2", "Personeel", True, "17:00:00", "09:00:00", False))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "BEZOEKER_1", "BEZOEKER_2", "Bezoekers", True,  "17:00:00", "09:00:00", False))
-                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, "PAND", "SLAAPPLA_2", "SLAAPPLA_3", "Slaapplaatsen", True,  "17:00:00", "09:00:00", False)),
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, g.PAND, "PERSONEE_1", "PERSONEE_2", "Personeel", True, "17:00:00", "09:00:00", False))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, g.PAND, "BEZOEKER_1", "BEZOEKER_2", "Bezoekers", True,  "17:00:00", "09:00:00", False))
+                          .addProp(DBKVerblijfProp("verblijf", g.shapefileLocation, g.PAND, "SLAAPPLA_2", "SLAAPPLA_3", "Slaapplaatsen", True,  "17:00:00", "09:00:00", False)),
                         DBKListProp("adres")
-                          .addProp(DBKAdresProp("adres", g.shapefileLocation, "PAND", "ADRES", "PLAATS")),
+                          .addProp(DBKAdresProp("adres", g.shapefileLocation, g.PAND, "ADRES", "PLAATS")),
                         DBKListProp("afwijkendebinnendekking")
-                          .addProp(DBKBinnendekCompProp("afwijkendebinnendekking", g.shapefileLocation, "PAND", "C2000_BINN", "AFWIJKENDE", "BINNENDEKK")),
+                          .addProp(DBKBinnendekCompProp("afwijkendebinnendekking", g.shapefileLocation, g.PAND, "C2000_BINN", "AFWIJKENDE", "BINNENDEKK")),
                         DBKListProp("pandgeometrie")
-                            .addProp(DBKPandgeometrieProp("pandgeometrie", g.shapefileLocation, "PAND", "DBK_OBJECT", "BAGPAND_ID", "STATUS_BAG")),
+                            .addProp(DBKPandgeometrieProp("pandgeometrie", g.shapefileLocation, g.PAND, "DBK_OBJECT", "BAGPAND_ID", "STATUS_BAG")),
                         DBKListProp("brandcompartiment")
-                            .addProp(DBKBrandCompProp("brandcompartiment",  g.shapefileLocation, "COMPARTIMENTERING", "DBK_OBJECT", "SYMBOOLCOD", "BIJZONDERH", DtypeBrandcomp)),
+                            .addProp(DBKBrandCompProp("brandcompartiment",  g.shapefileLocation, g.COMPARTIMENTERING, "DBK_OBJECT", "SYMBOOLCOD", "BIJZONDERH", DtypeBrandcomp)),
                         DBKListProp("brandweervoorziening")
-                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "BRANDWEERVOORZIENING", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
-                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "OPSTELPLAATS", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeOpstelplaats))
-                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "TOEGANG_PAND", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
-                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, "TOEGANG_TERREIN", "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
-                            .addProp(DBKHellingbaanProp("brandweervoorziening", g.shapefileLocation, "HELLINGBAAN", "DBK_OBJECT", "Falck36", "BIJZONDERH", "SYMBOOLGRO", DtypeBrandweervoorz)),
+                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, g.BRANDWEERVOORZIENING, "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
+                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, g.OPSTELPLAATS, "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeOpstelplaats))
+                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, g.TOEGANG_PAND, "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
+                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, g.TOEGANG_TERREIN, "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
+                            .addProp(DBKHellingbaanProp("brandweervoorziening", g.shapefileLocation, g.HELLINGBAAN, "DBK_OBJECT", "Falck36", "BIJZONDERH", "SYMBOOLGRO", DtypeBrandweervoorz)),
                         DBKListProp("contact")
-                          .addProp(DBKContactProp("contact", g.shapefileLocation, "PAND", "CONTACT_FU", "CONTACT_NA", "CONTACT_TE")),
+                          .addProp(DBKContactProp("contact", g.shapefileLocation, g.PAND, "CONTACT_FU", "CONTACT_NA", "CONTACT_TE")),
                         DBKListProp("foto")
-                          .addProp(DBKFotoProp("foto", g.shapefileLocation, "PAND", "FOTO", "FOTO")),
+                          .addProp(DBKFotoProp("foto", g.shapefileLocation, g.PAND, "FOTO", "FOTO")),
                         DBKListProp("gevaarlijkestof")
-                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, "GEVAARLIJKE_STOFFEN", "DBK_OBJECT", "STOFNAAM", "GEVI_CODE", "VN_NUMMER", "SYMBOOLCOD", "HOEVEELHEI", "SYMBOOLGRO", "BIJZONDERH", DtypeGevaarlijkeStof))
-                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, "GEVAREN", "DBK_OBJECT", "SOORT_GEVA", None, None, "SYMBOOLCOD", None, "SYMBOOLGRO", "BIJZONDERH", DtypeGevaarlijkeStof)),
+                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, g.GEVAARLIJKE_STOFFEN, "DBK_OBJECT", "STOFNAAM", "GEVI_CODE", "VN_NUMMER", "SYMBOOLCOD", "HOEVEELHEI", "SYMBOOLGRO", "BIJZONDERH", DtypeGevaarlijkeStof))
+                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, g.GEVAREN, "DBK_OBJECT", "SOORT_GEVA", None, None, "SYMBOOLCOD", None, "SYMBOOLGRO", "BIJZONDERH", DtypeGevaarlijkeStof)),
                         DBKListProp("hulplijn")
-                            .addProp(DBKHulplijnDomProp("hulplijn", g.shapefileLocation, "DBK_LIJN", "DBK_OBJECT", "TYPE", "BIJZONDERH", "OPMERKINGE", DtypeHulplijn))
-                            .addProp(DBKHulplijnConstProp("hulplijn", g.shapefileLocation, "SLAGBOOM", "DBK_OBJECT", "BIJZONDERH", "Bbarrier"))
-                            .addProp(DBKHulplijnConstProp("hulplijn", g.shapefileLocation, "AANPIJLING", "DBK_OBJECT", "BIJZONDERH", "Line")),
+                            .addProp(DBKHulplijnDomProp("hulplijn", g.shapefileLocation, g.DBK_LIJN, "DBK_OBJECT", "TYPE", "BIJZONDERH", "OPMERKINGE", DtypeHulplijn))
+                            .addProp(DBKHulplijnConstProp("hulplijn", g.shapefileLocation, g.SLAGBOOM, "DBK_OBJECT", "BIJZONDERH", "Bbarrier"))
+                            .addProp(DBKHulplijnConstProp("hulplijn", g.shapefileLocation, g.AANPIJLING, "DBK_OBJECT", "BIJZONDERH", "Line")),
                         DBKListProp("tekstobject")
-                            .addProp(DBKTekstProp("tekst", g.shapefileLocation, "TEKST", "DBK_OBJECT", "TEKST", "SYMBOOLHOE", "SYMBOOLGRO")),
+                            .addProp(DBKTekstProp("tekst", g.shapefileLocation, g.TEKST, "DBK_OBJECT", "TEKST", "SYMBOOLHOE", "SYMBOOLGRO")),
                         DBKListProp("toegangterrein")
-                            .addProp(DBKToegangTerreinProp("toegangterrein", g.shapefileLocation, "AANRIJROUTE", "DBK_OBJECT", "BIJZONDERH")),
+                            .addProp(DBKToegangTerreinProp("toegangterrein", g.shapefileLocation, g.AANRIJROUTE, "DBK_OBJECT", "BIJZONDERH")),
                         DBKListProp("bijzonderheid")
-                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, "PAND", "BIJZONDERH", 1))
-                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, "PAND", "BIJZ_HEDEN", 2))
-                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, "PAND", "BIJZ_HED_1", 3))
-                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, "PAND", "BIJZ_HED_2", 4)),
-                        DBKStrProp("sleutelbuisInformatie", g.shapefileLocation, "DBK_OBJECT", "SLEUTELBUI"),
-                        DBKStrProp("brandmeldpaneel", g.shapefileLocation, "DBK_OBJECT", "BRANDMELDP"),
-                        DBKStrProp("brandmeldcentrale", g.shapefileLocation, "DBK_OBJECT", "BRANDMELDC"),
-                        DBKStrProp("aanvalsplan", g.shapefileLocation, "PAND", "AANVALSPLA"),
-                        DBKStrProp("bijzonderheidAlgemeen", g.shapefileLocation, "DBK_OBJECT", "BIJZONDERH"),
-                        DBKStrProp("liften", g.shapefileLocation, "PAND", "LIFTEN"),
-                        DBKStrProp("dakcontrstuctie", g.shapefileLocation, "PAND", "DAKCONSTRU"),
-                        DBKStrProp("compartimenten", g.shapefileLocation, "PAND", "COMPARTIME"),
-                        DBKStrProp("bijzonderheidBouwkundig", g.shapefileLocation, "PAND", "BIJZ_BOUWK"),
-                        DBKStrProp("afsluiterGas", g.shapefileLocation, "DBK_OBJECT", "AFSLUITER_"),
-                        DBKStrProp("afsluiterElectra", g.shapefileLocation, "DBK_OBJECT", "AFSLUITER1"),
-                        DBKStrProp("afsluiterNeon", g.shapefileLocation, "DBK_OBJECT", "AFSLUITE_1"),
-                        DBKStrProp("afsluiterCV", g.shapefileLocation, "DBK_OBJECT", "AFSLUITE_2"),
-                        DBKStrProp("luchtbehandeling", g.shapefileLocation, "DBK_OBJECT", "LUCHTBEHAN"),
-                        DBKStrProp("bijzonderheidAfsluiters", g.shapefileLocation, "DBK_OBJECT", "BIJZONDE_1"),
-                        DBKStrProp("ontruimingsinstallatie", g.shapefileLocation, "PAND", "ONTRUIMING"),
-                        DBKStrProp("ontruimingsplan", g.shapefileLocation, "PAND", "ONTRUIMI_1"),
-                        DBKStrProp("verzamelplaats", g.shapefileLocation, "PAND", "VERZAMELPL"),
-                        DBKStrProp("bijzonderheidAanwezigheid", g.shapefileLocation, "PAND", "BIJZONDE_1"),
+                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, g.PAND, "BIJZONDERH", 1))
+                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, g.PAND, "BIJZ_HEDEN", 2))
+                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, g.PAND, "BIJZ_HED_1", 3))
+                            .addProp(DBKBijzonderheidProp("bijzonderheid", g.shapefileLocation, g.PAND, "BIJZ_HED_2", 4)),
+                        DBKStrProp("sleutelbuisInformatie", g.shapefileLocation, g.DBK_OBJECT, "SLEUTELBUI"),
+                        DBKStrProp("brandmeldpaneel", g.shapefileLocation, g.DBK_OBJECT, "BRANDMELDP"),
+                        DBKStrProp("brandmeldcentrale", g.shapefileLocation, g.DBK_OBJECT, "BRANDMELDC"),
+                        DBKStrProp("aanvalsplan", g.shapefileLocation, g.PAND, "AANVALSPLA"),
+                        DBKStrProp("bijzonderheidAlgemeen", g.shapefileLocation, g.DBK_OBJECT, "BIJZONDERH"),
+                        DBKStrProp("liften", g.shapefileLocation, g.PAND, "LIFTEN"),
+                        DBKStrProp("dakcontrstuctie", g.shapefileLocation, g.PAND, "DAKCONSTRU"),
+                        DBKStrProp("compartimenten", g.shapefileLocation, g.PAND, "COMPARTIME"),
+                        DBKStrProp("bijzonderheidBouwkundig", g.shapefileLocation, g.PAND, "BIJZ_BOUWK"),
+                        DBKStrProp("afsluiterGas", g.shapefileLocation, g.DBK_OBJECT, "AFSLUITER_"),
+                        DBKStrProp("afsluiterElectra", g.shapefileLocation, g.DBK_OBJECT, "AFSLUITER1"),
+                        DBKStrProp("afsluiterNeon", g.shapefileLocation, g.DBK_OBJECT, "AFSLUITE_1"),
+                        DBKStrProp("afsluiterCV", g.shapefileLocation, g.DBK_OBJECT, "AFSLUITE_2"),
+                        DBKStrProp("luchtbehandeling", g.shapefileLocation, g.DBK_OBJECT, "LUCHTBEHAN"),
+                        DBKStrProp("bijzonderheidAfsluiters", g.shapefileLocation, g.DBK_OBJECT, "BIJZONDE_1"),
+                        DBKStrProp("ontruimingsinstallatie", g.shapefileLocation, g.PAND, "ONTRUIMING"),
+                        DBKStrProp("ontruimingsplan", g.shapefileLocation, g.PAND, "ONTRUIMI_1"),
+                        DBKStrProp("verzamelplaats", g.shapefileLocation, g.PAND, "VERZAMELPL"),
+                        DBKStrProp("bijzonderheidAanwezigheid", g.shapefileLocation, g.PAND, "BIJZONDE_1"),
 
 
         ]
 
         # Definieer DBKfeature properties
         DBKFeaturePropDef = [
-                        DBKStrProp("identificatie", g.shapefileLocation, "PAND", "DBK_OBJECT"),
-                        DBKBoolProp("BHVaanwezig", g.shapefileLocation, "PAND", "AANWEZIG_1"),
-                        DBKDateProp("controleDatum", g.shapefileLocation, "PAND", "LAATSTE_CO"),
-                        DBKStrProp("formeleNaam", g.shapefileLocation, "PAND", "NAAM_PAND"),
-                        DBKStrProp("informeleNaam", g.shapefileLocation, "PAND", "INFORMELE_"),
-                        DBKStrProp("OMSnummer", g.shapefileLocation, "PAND", "OMS_NUMMER"),
-                        DBKStrProp("inzetprocedure", g.shapefileLocation, "PAND", "INZETPROCE"),
+                        DBKStrProp("identificatie", g.shapefileLocation, g.PAND, "DBK_OBJECT"),
+                        DBKBoolProp("BHVaanwezig", g.shapefileLocation, g.PAND, "AANWEZIG_1"),
+                        DBKDateProp("controleDatum", g.shapefileLocation, g.PAND, "LAATSTE_CO"),
+                        DBKStrProp("formeleNaam", g.shapefileLocation, g.PAND, "NAAM_PAND"),
+                        DBKStrProp("informeleNaam", g.shapefileLocation, g.PAND, "INFORMELE_"),
+                        DBKStrProp("OMSnummer", g.shapefileLocation, g.PAND, "OMS_NUMMER"),
+                        DBKStrProp("inzetprocedure", g.shapefileLocation, g.PAND, "INZETPROCE"),
                         DBKConstProp("typeFeature", "Object"),
                         DBKConstProp("verwerkt", None),
                         DBKConstProp("hoofdobject", None),
                         DBKConstProp("bouwlaag", None),
-                        DBKStrProp("risicoklasse", g.shapefileLocation, "PAND", "RISICOKLAS"),
+                        DBKStrProp("risicoklasse", g.shapefileLocation, g.PAND, "RISICOKLAS"),
                         DBKConstProp("verdiepingen", 0),
                         DBKListProp("adres")
-                          .addProp(DBKAdresProp("adres", g.shapefileLocation, "PAND", "ADRES", "PLAATS")),
+                          .addProp(DBKAdresProp("adres", g.shapefileLocation, g.PAND, "ADRES", "PLAATS")),
         ]
 
         # Definieer geometry-property voor DBKfeature
@@ -208,7 +210,7 @@ def main():
         # Bepaal voor alle DBKObject-properties de veldindex bij de pand-velden .
         for item in DBKObjectDef:
             if isinstance(item, DBKProp):
-                if item.shapefilename == "PAND":
+                if item.shapefilename == g.PAND:
                     item.setFieldindex(pandfields)
                 else:
                     item.setFieldindex(dbkobjectfields)
@@ -253,7 +255,7 @@ def main():
                     elif isinstance(item, DBKListProp):
                         dictDBKObject.update({item.name: item.value(srHoofdpand, pandfields)})
                     else:
-                        if item.shapefilename == "PAND":
+                        if item.shapefilename == g.PAND:
                             dictDBKObject.update({item.name: item.value(srHoofdpand)})
                         else:
                             dictDBKObject.update({item.name: item.value(srDBKObject)})
