@@ -7,6 +7,8 @@
 # Created:     16-06-2015
 # Changes:     15-10-2015, AK:
 #              - Radius-property toegevoegd aan DBKGevaarStofProp.
+#              21-10-2015, AK:
+#              - DBKListProp(DBKProp): self.shapefilename = g.PAND ipv "PAND"
 #-------------------------------------------------------------------------------
 
 import os, shapefile, datetime
@@ -79,7 +81,7 @@ class DBKProp(object):
 # DBKListProp: Resulteert in een list gebaseerd op meerdere velden in een record.
 class DBKListProp(DBKProp):
     def __init__(self, name):
-        self.shapefilename = "PAND"
+        self.shapefilename = g.PAND
         self.name = name
         self.isList = True
         self._propList = []
