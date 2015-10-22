@@ -39,19 +39,19 @@ if UPPERCASE:
     AANRIJROUTE = "AANRIJROUTE" + shpExt
     DBK_OBJECT ="DBK_OBJECT" + shpExt
 else:
-    PAND = "pand" + shpExt
-    BRANDWEERVOORZIENING = "brandweervoorziening" + shpExt
-    COMPARTIMENTERING = "compartimentering" + shpExt
-    OPSTELPLAATS = "opstelplaats" + shpExt
-    TOEGANG_PAND = "toegang_pand" + shpExt
-    TOEGANG_TERREIN = "toegang_terrein" + shpExt
-    HELLINGBAAN = "hellingbaan" + shpExt
-    GEVAARLIJKE_STOFFEN = "gevaarlijke_stoffen" + shpExt
-    GEVAREN = "gevaren" + shpExt
-    DBK_LIJN ="dbk_lijn" + shpExt
-    SLAGBOOM = "slagboom" + shpExt
-    AANPIJLING = "aanpijling" + shpExt
-    TEKST = "tekst" + shpExt
-    AANRIJROUTE = "aanrijroute" + shpExt
-    DBK_OBJECT ="dbk_object" + shpExt
+    PAND = "Pand" + shpExt
+    BRANDWEERVOORZIENING = "Brandweervoorziening" + shpExt
+    COMPARTIMENTERING = "Compartimentering" + shpExt
+    OPSTELPLAATS = "Opstelplaats" + shpExt
+    TOEGANG_PAND = "Toegang_pand" + shpExt
+    TOEGANG_TERREIN = "Toegang_terrein" + shpExt
+    HELLINGBAAN = "Hellingbaan" + shpExt
+    GEVAARLIJKE_STOFFEN = "Gevaarlijke_stoffen" + shpExt
+    GEVAREN = "Gevaren" + shpExt
+    DBK_LIJN ="Overige_lijnen" + shpExt
+    SLAGBOOM = "Slagboom" + shpExt
+    AANPIJLING = "Aanpijling" + shpExt
+    TEKST = "Teksten" + shpExt
+    AANRIJROUTE = "Aanrijroute" + shpExt
+    DBK_OBJECT ="DBK_Object" + shpExt
 
