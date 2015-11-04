@@ -9,7 +9,9 @@
 #              - Centroid van DBKFeature bepaald aan de hand van het hoofdpand
 #                en niet meer van het DBKObject.
 #              20-10-2015, AK:
-#              Shapefilenamen in variabelen gezet.
+#              - Shapefilenamen in variabelen gezet.
+#              04-11-2015, AK:
+#              - Gevaren conversie naar brandweervoorziening ipv naar gevaarlijke stof.
 #-------------------------------------------------------------------------------
 
 import sys, shapefile, datetime
@@ -78,7 +80,7 @@ def main():
         if g.writeLog:
             WriteLogTxt(g.logFilename, LogStart())
 
-        # CreÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«er de domeinen.
+        # CreÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«er de domeinen.
         DtypeBrandcomp = DBKDBrandcompartiment()
         DtypeBrandweervoorz = DBKDBrandweervoorziening()
         DtypeOpstelplaats = DBKDOpstelplaats()
@@ -125,14 +127,14 @@ def main():
                             .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, g.OPSTELPLAATS, "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeOpstelplaats))
                             .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, g.TOEGANG_PAND, "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
                             .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, g.TOEGANG_TERREIN, "DBK_OBJECT", "SYMBOOLCOD", "OMSCHRIJVI", "BIJZONDERH", "SYMBOOLHOE", "SYMBOOLGRO", DtypeBrandweervoorz))
+                            .addProp(DBKBWVoorzProp("brandweervoorziening", g.shapefileLocation, g.GEVAREN, "DBK_OBJECT", "SYMBOOLCOD", None, "BIJZONDERH", None, "SYMBOOLGRO", DtypeBrandweervoorz))
                             .addProp(DBKHellingbaanProp("brandweervoorziening", g.shapefileLocation, g.HELLINGBAAN, "DBK_OBJECT", "Falck36", "BIJZONDERH", "SYMBOOLGRO", DtypeBrandweervoorz)),
                         DBKListProp("contact")
                           .addProp(DBKContactProp("contact", g.shapefileLocation, g.PAND, "CONTACT_FU", "CONTACT_NA", "CONTACT_TE")),
                         DBKListProp("foto")
                           .addProp(DBKFotoProp("foto", g.shapefileLocation, g.PAND, "FOTO", "FOTO")),
                         DBKListProp("gevaarlijkestof")
-                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, g.GEVAARLIJKE_STOFFEN, "DBK_OBJECT", "STOFNAAM", "GEVI_CODE", "VN_NUMMER", "SYMBOOLCOD", "HOEVEELHEI", "SYMBOOLGRO", "BIJZONDERH", DtypeGevaarlijkeStof))
-                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, g.GEVAREN, "DBK_OBJECT", "SOORT_GEVA", None, None, "SYMBOOLCOD", None, "SYMBOOLGRO", "BIJZONDERH", DtypeGevaarlijkeStof)),
+                            .addProp(DBKGevaarStofProp("gevaarlijkestof", g.shapefileLocation, g.GEVAARLIJKE_STOFFEN, "DBK_OBJECT", "STOFNAAM", "GEVI_CODE", "VN_NUMMER", "SYMBOOLCOD", "HOEVEELHEI", "SYMBOOLGRO", "BIJZONDERH", DtypeGevaarlijkeStof)),
                         DBKListProp("hulplijn")
                             .addProp(DBKHulplijnDomProp("hulplijn", g.shapefileLocation, g.DBK_LIJN, "DBK_OBJECT", "TYPE", "BIJZONDERH", "OPMERKINGE", DtypeHulplijn))
                             .addProp(DBKHulplijnConstProp("hulplijn", g.shapefileLocation, g.SLAGBOOM, "DBK_OBJECT", "BIJZONDERH", "Bbarrier"))

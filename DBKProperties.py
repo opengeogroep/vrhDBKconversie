@@ -9,6 +9,8 @@
 #              - Radius-property toegevoegd aan DBKGevaarStofProp.
 #              21-10-2015, AK:
 #              - DBKListProp(DBKProp): self.shapefilename = g.PAND ipv "PAND"
+#              04-11-2015, AK:
+#              - Check op value aangepast met IsNullOrEmpty.
 #-------------------------------------------------------------------------------
 
 import os, shapefile, datetime
@@ -102,14 +104,14 @@ class DBKListProp(DBKProp):
                 if fldidx > -1:
                     joinid = shaperecord.record[fldidx]
                     v = item.value(joinid)
-                    if v:
+                    if not IsNullOrEmpty(v):
                         valueList.extend(v)
                 else:
                     if g.writeLog:
                         WriteLogTxt(g.logFilename, LogWarning(e.FieldError(item.joinfield, item.shapefile).message))
             else:
                 v = item.value(shaperecord)
-                if v:
+                if not IsNullOrEmpty(v):
                     valueList.append(v)
 
 ##            v = item.value(shaperecord)
@@ -128,7 +130,7 @@ class DBKStrProp(DBKProp):
         if self.fieldindex == -1:
             return None
         v = shaperecord.record[self.fieldindex]
-        if v:
+        if not IsNullOrEmpty(v):
             try:
                 s = str(v)
                 return s
@@ -142,13 +144,11 @@ class DBKIntProp(DBKProp):
         if self.fieldindex == -1:
             return None
         v = shaperecord.record[self.fieldindex]
-        if v:
-            try:
-                i = int(v)
-                return i
-            except:
-                return None
-        return None
+        try:
+            i = int(v)
+            return i
+        except:
+            return None
 
 #-------------------------------------------------------------------------------
 class DBKDateProp(DBKProp):
@@ -156,13 +156,11 @@ class DBKDateProp(DBKProp):
         if self.fieldindex == -1:
             return None
         v = shaperecord.record[self.fieldindex]
-        if v:
-            try:
-                dt = datetime.datetime.strptime(v, "%Y%m%d")
-                return str(dt)
-            except:
-                return None
-        return None
+        try:
+            dt = datetime.datetime.strptime(v, "%Y%m%d")
+            return str(dt)
+        except:
+            return None
 
 #-------------------------------------------------------------------------------
 class DBKBoolProp(DBKProp):
@@ -170,7 +168,7 @@ class DBKBoolProp(DBKProp):
         if self.fieldindex == -1:
             return None
         v = shaperecord.record[self.fieldindex]
-        if v:
+        if not IsNullOrEmpty(v):
             try:
                 if v.upper() == "JA":
                     return True
@@ -191,15 +189,10 @@ class DBKHoekProp(DBKIntProp):
     # Converteer van geographic naar aritmetic.
     def value(self, shaperecord):
         v = super(DBKHoekProp, self).value(shaperecord)
-        if v:
-##            v = v + self._correction
-##            if v < -360:
-##                v = v + 360
-##            elif v > 360:
-##                v = v - 360
+        if not IsNullOrEmpty(v):
             v = 360 - ((v + 270) % 360) - self._correction
             return v
-        return None
+        return 0
 
 #-------------------------------------------------------------------------------
 # DBKSymbProp: Symboolcode property. In Haaglanden zijn symboolcodes met een
@@ -301,7 +294,7 @@ class DBKMultiFieldProp(DBKProp):
         for i in self._fieldindices:
             if i > -1:
                 v = shaperecord.record[i]
-                if v:
+                if not IsNullOrEmpty(v):
                     try:
                         if len(s) > 0:
                             s += "; "
@@ -342,7 +335,7 @@ class DBKSamengesteldProp(DBKProp):
                 SGProp.update({item.name: item.value})
             else:
                 v = item.value(shaperecord)
-                if v:
+                if not IsNullOrEmpty(v):
                     allEmpty = False
                 SGProp.update({item.name: item.value(shaperecord)})
         if allEmpty:
@@ -485,7 +478,7 @@ class DBKVerblijfProp(DBKProp):
 
     def value(self, shaperecord):
         v = self._aantal.value(shaperecord)
-        if v:
+        if not IsNullOrEmpty(v):
             verblijf = dict()
             verblijf.update({self._aantal.name: self._aantal.value(shaperecord)})
             verblijf.update({self._bijzonderheden.name: self._bijzonderheden.value(shaperecord)})

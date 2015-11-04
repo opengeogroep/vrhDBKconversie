@@ -6,6 +6,8 @@
 #
 # Created:     07-07-2015
 # Copyright:   (c) ARIS B.V. 2015
+# Changes:     04-11-2015, AK:
+#              - IsNullOrEmpty toegevoegd.
 #-------------------------------------------------------------------------------
 import os, datetime
 from shapefile import *
@@ -42,6 +44,19 @@ def GeomCentroid(shape):
         return geom
     else:
         return None
+
+#-------------------------------------------------------------------------------
+def IsNullOrEmpty(v):
+    if v is None:
+        return True
+    if v == '':
+        return True
+    if v == "":
+        return True
+    if v == {}:
+        return True
+    if v == []:
+        return True
 
 #-------------------------------------------------------------------------------
 def HasNumbers(inputString):

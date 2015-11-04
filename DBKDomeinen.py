@@ -12,6 +12,8 @@
 #                en voor Schacht gebruikt. Door het domein van opstelplaatsen
 #                apart te definieren, kan Tb1.010 voor Schacht worden vertaald
 #                naar code Falck11.
+#              04-11-2015, AK:
+#              - Gevaren naar domein brandweervoorziening gekopieerd.
 #-------------------------------------------------------------------------------
 
 class DBKDomein(object):
@@ -104,7 +106,27 @@ class DBKDBrandweervoorziening(DBKDomein):
         "Tbe06":{"symboolcode":"Tbe06","naam":"Parkeerplaats", "namespace": "NEN1414","categorie":""},
         "TbeBus":{"symboolcode":"TbeBus","naam":"Bussluis", "namespace": "NEN1414","categorie":""},
         "TbeHoogte":{"symboolcode":"TbeHoogte","naam":"Doorrijhoogte", "namespace": "NEN1414","categorie":""},
-        "Falck36":{"symboolcode":"Falck36","naam":"Hellingbaan","namespace":"Other","categorie":"objectinformatie"}
+        "Falck36":{"symboolcode":"Falck36","naam":"Hellingbaan","namespace":"Other","categorie":"objectinformatie"},
+        "Tw09":{"symboolcode":"Tw09","naam":"Radioactief Materiaal","namespace":"NEN1414","categorie":""},
+        "Tw10":{"symboolcode":"Tw10","naam":"Laserstralen","namespace":"NEN1414","categorie":""},
+        "Tw11":{"symboolcode":"Tw11","naam":"Niet-ioniserende Straling","namespace":"NEN1414","categorie":""},
+        "Tw12":{"symboolcode":"Tw12","naam":"Magnetisch Veld","namespace":"NEN1414","categorie":""},
+        "Tw14":{"symboolcode":"Tw14","naam":"Vallen door Hoogteverschil","namespace":"NEN1414","categorie":""},
+        "Tw15":{"symboolcode":"Tw15","naam":"Biologische Agentia","namespace":"NEN1414","categorie":""},
+        "Tw16":{"symboolcode":"Tw16","naam":"Lage temperatuur of bevriezing","namespace":"NEN1414","categorie":""},
+        "Tw19":{"symboolcode":"Tw19","naam":"Explosieve atmosfeer","namespace":"NEN1414","categorie":""},
+        "Tw28":{"symboolcode":"Tw28","naam":"Accus en klein chemisch materiaal","namespace":"NEN1414","categorie":""},
+        "Tw02":{"symboolcode":"Tw02","naam":"Electrische Spanning","namespace":"NEN1414","categorie":""},
+        "Tw08":{"symboolcode":"Tw08","naam":"Explosief","namespace":"NEN1414","categorie":""},
+        "Tw03":{"symboolcode":"Tw03","naam":"Ontvlambaar","namespace":"NEN1414","categorie":""},
+        "Tw07":{"symboolcode":"Tw07","naam":"Brand bevorderend (oxiderend)","namespace":"NEN1414","categorie":""},
+        "Tw05":{"symboolcode":"Tw05","naam":"Corrosief (bijtend)","namespace":"NEN1414","categorie":""},
+        "Tw04":{"symboolcode":"Tw04","naam":"Toxisch (giftig)","namespace":"NEN1414","categorie":""},
+        "Tw21":{"symboolcode":"Tw21","naam":"Niet blussen met water","namespace":"NEN1414","categorie":""},
+        "Tw22":{"symboolcode":"Tw22","naam":"Markering lab laag risico","namespace":"NEN1414","categorie":""},
+        "Tw23":{"symboolcode":"Tw23","naam":"Markering lab middel risico","namespace":"NEN1414","categorie":""},
+        "Tw24":{"symboolcode":"Tw24","naam":"Markering lab hoog risico","namespace":"NEN1414","categorie":""},
+        "Tw01":{"symboolcode":"Tw01","naam":"Algemeen gevaar","namespace":"NEN1414","categorie":""}
 }
 
         super(DBKDBrandweervoorziening, self).__init__(d)
