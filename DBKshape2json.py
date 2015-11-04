@@ -194,7 +194,7 @@ def main():
         DBKfeatGeomProp = DBKGeomCentroidProp()
 
         # Lees de shapefile met DBKObjecten.
-        dbkobjectReader = shapefile.Reader(os.path.join(g.shapefileLocation, "DBK_OBJECT.shp"))
+        dbkobjectReader = shapefile.Reader(os.path.join(g.shapefileLocation, g.DBK_OBJECT))
 
         # Haal de attribuutvelden op van de DBKObjecten-shapefile.
         dbkobjectfields = dbkobjectReader.fields[1:]
@@ -204,7 +204,7 @@ def main():
 
 
         # Lees de shapefile met panden.
-        pandReader = shapefile.Reader(os.path.join(g.shapefileLocation, "PAND.shp"))
+        pandReader = shapefile.Reader(os.path.join(g.shapefileLocation, g.PAND))
 
         # Haal de attribuutvelden op van de panden-shapefile.
         pandfields = pandReader.fields[1:]
