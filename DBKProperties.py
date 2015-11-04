@@ -280,12 +280,14 @@ class DBKMultiFieldProp(DBKProp):
 
     def setFieldindex(self, fields):
         for f in self._fieldnames:
-            fieldindex = FindField(fields, f)
-            if fieldindex == -1:
-                #raise e.FieldError(self.fieldname, self.shapefile)
-                if g.writeLog:
-                    WriteLogTxt(g.logFilename, LogWarning(e.MappingError(self.fieldname, self.shapefile, self.name).message))
-            self._fieldindices.append(fieldindex)
+            if not IsNullOrEmpty(f):
+                fieldindex = FindField(fields, f)
+                if fieldindex == -1:
+                    #raise e.FieldError(self.fieldname, self.shapefile)
+                    if g.writeLog:
+                        WriteLogTxt(g.logFilename, LogWarning(e.MappingError(self.fieldname, self.shapefile, self.name).message))
+                self._fieldindices.append(fieldindex)
+            self._fieldindices.append(-1)
 
     def value(self, shaperecord):
         if self._fieldnames.count == 0:
