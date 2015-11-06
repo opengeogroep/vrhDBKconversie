@@ -121,7 +121,7 @@ class DBKDBrandweervoorziening(DBKDomein):
         "Tw28":{"symboolcode":"Tw28","naam":"Accus en klein chemisch materiaal","namespace":"NEN1414","categorie":""},
         "Tw02":{"symboolcode":"Tw02","naam":"Electrische Spanning","namespace":"NEN1414","categorie":""},
         "Tw08":{"symboolcode":"Tw08","naam":"Explosief","namespace":"NEN1414","categorie":""},
-        "Tw03":{"symboolcode":"TwTemp","naam":"Ontvlambaar","namespace":"NEN1414","categorie":""},
+        "Tw03":{"symboolcode":"TwTemp","naam":"Temperatuur","namespace":"NEN1414","categorie":""},
         "Tw07":{"symboolcode":"Tw07","naam":"Brand bevorderend (oxiderend)","namespace":"NEN1414","categorie":""},
         "Tw05":{"symboolcode":"Tw05","naam":"Corrosief (bijtend)","namespace":"NEN1414","categorie":""},
         "Tw04":{"symboolcode":"Tw04","naam":"Toxisch (giftig)","namespace":"NEN1414","categorie":""},
