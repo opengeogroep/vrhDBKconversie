@@ -14,6 +14,9 @@
 #                naar code Falck11.
 #              04-11-2015, AK:
 #              - Gevaren naar domein brandweervoorziening gekopieerd.
+#              06-11-2015, AK:
+#              - Gevaar Tw03 als brandweervoorziening converteren naar TwTemp.
+#              - TypeHulplijn Binnenmuur convertereren naar Binnenmuur.
 #-------------------------------------------------------------------------------
 
 class DBKDomein(object):
@@ -118,7 +121,7 @@ class DBKDBrandweervoorziening(DBKDomein):
         "Tw28":{"symboolcode":"Tw28","naam":"Accus en klein chemisch materiaal","namespace":"NEN1414","categorie":""},
         "Tw02":{"symboolcode":"Tw02","naam":"Electrische Spanning","namespace":"NEN1414","categorie":""},
         "Tw08":{"symboolcode":"Tw08","naam":"Explosief","namespace":"NEN1414","categorie":""},
-        "Tw03":{"symboolcode":"Tw03","naam":"Ontvlambaar","namespace":"NEN1414","categorie":""},
+        "Tw03":{"symboolcode":"TwTemp","naam":"Ontvlambaar","namespace":"NEN1414","categorie":""},
         "Tw07":{"symboolcode":"Tw07","naam":"Brand bevorderend (oxiderend)","namespace":"NEN1414","categorie":""},
         "Tw05":{"symboolcode":"Tw05","naam":"Corrosief (bijtend)","namespace":"NEN1414","categorie":""},
         "Tw04":{"symboolcode":"Tw04","naam":"Toxisch (giftig)","namespace":"NEN1414","categorie":""},
@@ -190,7 +193,7 @@ class DBKDGevaarlijkestof(DBKDomein):
 
 class DBKDHulplijn(DBKDomein):
     def __init__(self):
-        d = {"Binnenmuur":{"typeHulplijn":"Line"},
+        d = {"Binnenmuur":{"typeHulplijn":"Binnenmuur"},
         "Aanrijroute":{"typeHulplijn":"Line"},
         "Blusleiding":{"typeHulplijn":"DBL Leiding"},
         "Hekwerk":{"typeHulplijn":"Fence"},
