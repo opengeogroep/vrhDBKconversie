@@ -12,6 +12,8 @@
 #              - Shapefilenamen in variabelen gezet.
 #              04-11-2015, AK:
 #              - Gevaren conversie naar brandweervoorziening ipv naar gevaarlijke stof.
+#              07-12-2015, AK:
+#              - Exit code toegevoegd (0=succes; 1=fail)
 #-------------------------------------------------------------------------------
 
 import sys, shapefile, datetime
@@ -67,7 +69,7 @@ def main():
 # Locatie van uitvoer DBKFeaturesfile.
 # Locatie van uitvoer DBKObjectenfiles.
 # Locatie en naam van logfile.
-
+    result = 1
     try:
 
         currentTime = datetime.datetime.now()
@@ -80,7 +82,7 @@ def main():
         if g.writeLog:
             WriteLogTxt(g.logFilename, LogStart())
 
-        # CreÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â‚¬Å¾Ã‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¾Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã¢â‚¬Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡Ãƒâ€šÃ‚Â¬ÃƒÆ’Ã¢â‚¬Â¦Ãƒâ€šÃ‚Â¡ÃƒÆ’Ã†â€™Ãƒâ€ Ã¢â‚¬â„¢ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€¦Ã‚Â¡ÃƒÆ’Ã†â€™ÃƒÂ¢Ã¢â€šÂ¬Ã…Â¡ÃƒÆ’Ã¢â‚¬Å¡Ãƒâ€šÃ‚Â«er de domeinen.
+        # Creer de domeinen.
         DtypeBrandcomp = DBKDBrandcompartiment()
         DtypeBrandweervoorz = DBKDBrandweervoorziening()
         DtypeOpstelplaats = DBKDOpstelplaats()
@@ -320,25 +322,32 @@ def main():
         timeString = currentTime.strftime('%Y-%m-%d %H:%M:%S')
         print("Einde: " + str(timeString))
 
+        result = 0
+        exit(result)
 
     except OSError as err:
-        print (err.strerror)
-        if g.writeLog:
-            WriteLogTxt(g.logFilename, LogError(err.strerror))
+        if result != 0:
+            print (err.strerror)
+            if g.writeLog:
+                WriteLogTxt(g.logFilename, LogError(err.strerror))
+            exit(1)
     except DBKError.DBKError as err:
-        print (err.message)
-        if g.writeLog:
-            WriteLogTxt(g.logFilename, LogError(err.message))
+        if result != 0:
+            print (err.message)
+            if g.writeLog:
+                WriteLogTxt(g.logFilename, LogError(err.message))
+            exit(1)
     except Exception as err:
-        print (err)
-        if g.writeLog:
-            WriteLogTxt(g.logFilename, err)
+        if result != 0:
+            print (err)
+            if g.writeLog:
+                WriteLogTxt(g.logFilename, err)
+            exit(1)
     finally:
         if 'dbkobjectJSON' in locals():
             dbkobjectJSON.close
         if g.writeLog:
             WriteLogTxt(g.logFilename, LogEnd())
-
 
 if __name__ == '__main__':
     main()
