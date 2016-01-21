@@ -148,7 +148,7 @@ class DBKDBrandcompartiment(DBKDomein):
         d = {"":{"symboolcode":"","naam":"Scheiding (algemeen)"},
 		"Tbk5.002":{"symboolcode":"Tbk5.002","naam":"60 minuten brandwerende scheiding"},
 		"Tbk5.003":{"symboolcode":"Tbk5.003","naam":"30 minuten brandwerende scheiding"},
-		"Tbk5.004":{"symboolcode":"Tbk5.004","naam":"Rookwerende scheiding"},
+		"Tbk5.000":{"symboolcode":"Tbk5.000","naam":"Rookwerende scheiding"},
 		"Tbk5.005":{"symboolcode":"Tbk5.005","naam":"> 60 minuten brandwerende scheiding"},
     "Tbk5.120":{"symboolcode":"Tbk5.120","naam":"> 120 minuten brandwerende scheiding"}}
 
