@@ -51,7 +51,7 @@ Contact
 =======
 ARIS B.V.
 Tel: 030-2769180
-Email: anke.keuren@aris.nl of eddy.scheper@aris.nl
+Email: rinke.heida@aris.nl of eddy.scheper@aris.nl
 
 
 

@@ -3,6 +3,7 @@
 # Purpose:
 #
 # Author:      Anke Keuren (ARIS B.V.)
+#              Rinke Heida (ARIS B.V.)
 #
 # Created:     16-06-2015
 # Changes:     15-10-2015, AK:
@@ -11,6 +12,8 @@
 #              - DBKListProp(DBKProp): self.shapefilename = g.PAND ipv "PAND"
 #              04-11-2015, AK:
 #              - Check op value aangepast met IsNullOrEmpty.
+#              30-03-2016, RH:
+#              DBKFltProp toegevoegd voor formateren van een floating point waarde
 #-------------------------------------------------------------------------------
 
 import os, shapefile, datetime
@@ -147,6 +150,19 @@ class DBKIntProp(DBKProp):
         try:
             i = int(v)
             return i
+        except:
+            return None
+
+#-------------------------------------------------------------------------------
+class DBKFltProp(DBKProp):
+    def value(self, shaperecord):
+        if self.fieldindex == -1:
+            return None
+        v = shaperecord.record[self.fieldindex]
+        try:
+            f = float(v)
+            f = "{:.2f}".format(f)
+            return f
         except:
             return None
 

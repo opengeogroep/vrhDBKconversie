@@ -3,6 +3,7 @@
 # Purpose:     Schrijf DBK object informatie uit de shapefiles in json-files.
 #
 # Author:      Anke Keuren (ARIS B.V.)
+#              Rinke Heida (ARIS B.V.)
 #
 # Created:     11-06-2015
 # Changes:     15-10-2015, AK:
@@ -14,6 +15,8 @@
 #              - Gevaren conversie naar brandweervoorziening ipv naar gevaarlijke stof.
 #              07-12-2015, AK:
 #              - Exit code toegevoegd (0=succes; 1=fail)
+#              30-03-2016, RH:
+#              - Extra velden toegevoegd (oppervlakte - WTSlocatie)
 #-------------------------------------------------------------------------------
 
 import sys, shapefile, datetime
@@ -170,7 +173,17 @@ def main():
                         DBKStrProp("verzamelplaats", g.shapefileLocation, g.PAND, "VERZAMELPL"),
                         DBKStrProp("bijzonderheidAanwezigheid", g.shapefileLocation, g.PAND, "BIJZONDE_1"),
 
-
+                        DBKFltProp("oppervlakte", g.shapefileLocation, g.PAND, "OPPERVLAKT"),
+                        DBKIntProp("bouwjaar", g.shapefileLocation, g.PAND, "BOUWJAAR"),
+                        DBKStrProp("BHVdag", g.shapefileLocation, g.PAND, "BHV_DAG"),
+                        DBKStrProp("BHVnacht", g.shapefileLocation, g.PAND, "BHV_NACHT"),
+                        DBKStrProp("BHVweekend", g.shapefileLocation, g.PAND, "BHV_WEEKEN"),
+                        DBKStrProp("BHVomschrijving", g.shapefileLocation, g.PAND, "BHV_OMSCH"),
+                        DBKStrProp("naam", g.shapefileLocation, g.DBK_OBJECT, "NAAM"),
+                        DBKStrProp("automatischeblusinstallatie", g.shapefileLocation, g.DBK_OBJECT, "AUTOMATISC"),
+                        DBKStrProp("rookwarmteafvoerinstallatie", g.shapefileLocation, g.DBK_OBJECT, "ROOKWARMTE"),
+                        DBKStrProp("overdrukstuwdrukinstallatie", g.shapefileLocation, g.DBK_OBJECT, "OVERDRUKST"),
+                        DBKStrProp("WTSlocatie", g.shapefileLocation, g.DBK_OBJECT, "WTS_LOCATI"),
         ]
 
         # Definieer DBKfeature properties
