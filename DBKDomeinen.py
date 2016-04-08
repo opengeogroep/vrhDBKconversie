@@ -197,7 +197,7 @@ class DBKDHulplijn(DBKDomein):
         "Aanrijroute":{"typeHulplijn":"Line"},
         "Blusleiding":{"typeHulplijn":"DBL Leiding"},
         "Hekwerk":{"typeHulplijn":"Fence"},
-        "Inzetdiepte":{"typeHulplijn":""},
+        "Inzetdiepte":{"typeHulplijn":"Inzetdiepte"},
         "Schadecirkel":{"typeHulplijn":"HEAT"},
         "Vluchtroute":{"typeHulplijn":""},
         "Slagboom":{"typeHulplijn":"Bbarrier"},
