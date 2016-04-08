@@ -28,7 +28,7 @@ shpExt = ".shp"
 #UPPERCASE = True
 #wordSeparator = "_"
 UPPERCASE = False
-wordSeparator = " "
+wordSeparator = "_"
 
 if UPPERCASE:
     PAND = "PAND" + shpExt
