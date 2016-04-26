@@ -17,6 +17,8 @@
 #              - Exit code toegevoegd (0=succes; 1=fail)
 #              30-03-2016, RH:
 #              - Extra velden toegevoegd (oppervlakte - WTSlocatie)
+#              26-04-2016, RH
+#              - Adressen toegevoegd: DBKListProp("adressen")
 #-------------------------------------------------------------------------------
 
 import sys, shapefile, datetime
@@ -184,6 +186,8 @@ def main():
                         DBKStrProp("rookwarmteafvoerinstallatie", g.shapefileLocation, g.DBK_OBJECT, "ROOKWARMTE"),
                         DBKStrProp("overdrukstuwdrukinstallatie", g.shapefileLocation, g.DBK_OBJECT, "OVERDRUKST"),
                         DBKStrProp("WTSlocatie", g.shapefileLocation, g.DBK_OBJECT, "WTS_LOCATI"),
+                        DBKListProp("adressen")
+                          .addProp(DBKAdressenProp("adressen", g.shapefileLocation, g.ADRESSEN, "DBK_OBJECT", "STRAATNAAM", "HUISNUMMER", "HUISLETTER", "TOEVOEGING", "POSTCODE", "WOONPLAATS")),
         ]
 
         # Definieer DBKfeature properties
@@ -203,6 +207,8 @@ def main():
                         DBKConstProp("verdiepingen", 0),
                         DBKListProp("adres")
                           .addProp(DBKAdresProp("adres", g.shapefileLocation, g.PAND, "ADRES", "PLAATS")),
+                        DBKListProp("adressen")
+                          .addProp(DBKAdressenProp("adressen", g.shapefileLocation, g.ADRESSEN, "DBK_OBJECT", "STRAATNAAM", "HUISNUMMER", "HUISLETTER", "TOEVOEGING", "POSTCODE", "WOONPLAATS")),
         ]
 
         # Definieer geometry-property voor DBKfeature
@@ -232,11 +238,11 @@ def main():
                 else:
                     item.setFieldindex(dbkobjectfields)
 
-
         # Bepaal voor alle DBKfeature-properties de veldindex bij de pand-velden .
         for item in DBKFeaturePropDef:
             if isinstance(item, DBKProp):
-                item.setFieldindex(pandfields)
+                if item.shapefilename == g.PAND:
+                    item.setFieldindex(pandfields)
 
         # Zet de hoofdpanden in een dictionary met het joinID als key.
         # We gaan ervan uit dat een DBKObject 1 hoofdpand heeft.
@@ -274,12 +280,13 @@ def main():
                     else:
                         if item.shapefilename == g.PAND:
                             dictDBKObject.update({item.name: item.value(srHoofdpand)})
-                        else:
+                        elif item.shapefilename == g.DBK_OBJECT:
                             dictDBKObject.update({item.name: item.value(srDBKObject)})
 
                 # Schrijf het DBKObject in een json-file.
                 dbkobjectJSON = open(os.path.join(g.dbkobjectOutputLocation, str(joinID) + '.json'), "w")
                 # pretty
+                # om problemen met vreemde tekens zoals \uf047 te voorkomen ensure_ascii evt. op True zetten
                 dbkobjectJSON.write(dumps({"DBKObject": dictDBKObject}, indent=2, ensure_ascii=False, sort_keys=True) + "\n")
                 # flat
                 #dbkobjectJSON.write(dumps({"DBKObject": dictDBKObject}, ensure_ascii=False, sort_keys=True))
@@ -326,6 +333,7 @@ def main():
         # Als alle DBKObjecten zijn doorlopen, dan schrijven we ook de DBKFeatures in een json-file.
         dbkfeatureJSON = open(g.dbkfeatureFilename, "w")
         # pretty
+        # om problemen met vreemde tekens zoals \uf047 te voorkomen ensure_ascii op True zetten
         dbkfeatureJSON.write(dumps({"type":"FeatureCollection","features": DBKFeatures}, indent=2, ensure_ascii=False, sort_keys=True) + "\n")
         # flat
         #dbkfeatureJSON.write(dumps({"type":"FeatureCollection","features": DBKFeatures}, ensure_ascii=False, sort_keys=True))

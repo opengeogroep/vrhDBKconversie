@@ -13,7 +13,10 @@
 #              04-11-2015, AK:
 #              - Check op value aangepast met IsNullOrEmpty.
 #              30-03-2016, RH:
-#              DBKFltProp toegevoegd voor formateren van een floating point waarde
+#              - DBKFltProp toegevoegd voor formateren van een floating point waarde
+#              26-04-2016, RH:
+#              - DBKAdressenProp, DBKMultiAdressenProp, DBKMultiFieldListProp
+#                toegevoegd voor speciale behanding van adressen (nevenDBKadres)
 #-------------------------------------------------------------------------------
 
 import os, shapefile, datetime
@@ -102,7 +105,7 @@ class DBKListProp(DBKProp):
     def value(self, shaperecord, fields):
         valueList = []
         for item in self._propList:
-            if isinstance(item, DBKMultiProp):
+            if isinstance(item, DBKMultiProp) or isinstance(item, DBKMultiAdressenProp):
                 fldidx = FindField(fields, item.joinfield)
                 if fldidx > -1:
                     joinid = shaperecord.record[fldidx]
@@ -288,11 +291,12 @@ class DBKGeomCentroidProp(DBKProp):
 #-------------------------------------------------------------------------------
 # Input uit meerdere velden wordt in een veld samengevoegd.
 class DBKMultiFieldProp(DBKProp):
-    def __init__(self, name, location, shapefile, fieldnames):
+    def __init__(self, name, location, shapefile, fieldnames, separator="; "):
         super(DBKMultiFieldProp, self).__init__(name, location, shapefile)
         self._fieldnames = []
         self._fieldnames.extend(fieldnames)
         self._fieldindices = []
+        self._separator = separator
 
     def setFieldindex(self, fields):
         for f in self._fieldnames:
@@ -315,11 +319,60 @@ class DBKMultiFieldProp(DBKProp):
                 if not IsNullOrEmpty(v):
                     try:
                         if len(s) > 0:
-                            s += "; "
+                            s += self._separator # "; "
                         s += str(v)
                     except:
                         return None
         return s
+        #return None
+
+#-------------------------------------------------------------------------------
+# Input uit meerdere velden wordt in een veld in een list samengevoegd.
+class DBKMultiFieldListProp(DBKProp):
+    def __init__(self, name, location, shapefile, fieldnames, separator="; "):
+        super(DBKMultiFieldListProp, self).__init__(name, location, shapefile)
+        self._fieldnames = []
+        self._fieldnames.extend(fieldnames)
+        self._fieldindices = []
+        self._separator = separator
+
+    def setFieldindex(self, fields):
+        for f in self._fieldnames:
+            if not IsNullOrEmpty(f):
+                fieldindex = FindField(fields, f)
+                if fieldindex == -1:
+                    #raise e.FieldError(self.fieldname, self.shapefile)
+                    if g.writeLog:
+                        WriteLogTxt(g.logFilename, LogWarning(e.MappingError(self.fieldname, self.shapefile, self.name).message))
+                self._fieldindices.append(fieldindex)
+            self._fieldindices.append(-1)
+
+    def value(self, shaperecord):
+        valueList = []
+        if self._fieldnames.count == 0:
+            return None
+        s = ""
+        fieldCount = 0
+        for i in self._fieldindices:
+            if i > -1:
+                fieldCount += 1
+                v = shaperecord.record[i]
+
+                if not IsNullOrEmpty(v):
+                    try:
+                        if len(s) > 0:
+                            while s.count(self._separator) < fieldCount - 1:
+                                # als er eerder een leeg veld is geweest, dan moet alsnog de separator toegevoegd
+                                # bijv. bij adres 25||k102
+                                s += self._separator
+                        s += str(v)
+                    except:
+                        return None
+        valueList.append(s)
+        if len(valueList) > 0:
+            return valueList
+        else:
+            return None
         #return None
 
 #-------------------------------------------------------------------------------
@@ -405,37 +458,6 @@ class DBKMultiProp(DBKSamengesteldProp):
             else:
                 self._shaperecords[joinID] = [sr]
 
-##    def setShapefile(self, location, shapefile):
-##        if not os.path.exists(location):
-##            raise e.DirectoryError(location)
-##        fullname = os.path.join(location, shapefile)
-##        fileName, fileExt = os.path.splitext(fullname)
-##        if fileExt.lower() == '':
-##            fullname = fileName +'.shp'
-##        elif fileExt.lower() != '.shp':
-##            raise e.ShapefileError(fullname)
-##
-##        if not os.path.exists(fullname):
-##            raise e.FileError("File '{0}' does not exists".format(fullname))
-##        return fullname
-##    def setShapefile(self, location, shapefile):
-##        if not os.path.exists(location):
-##            raise e.DirectoryError(location)
-##        fullname = os.path.join(location, shapefile)
-##        fileName, fileExt = os.path.splitext(fullname)
-##        if fileExt.lower() == '':
-##            fullname = fileName +'.shp'
-##        elif fileExt.lower() != '.shp':
-##            raise e.ShapefileError(fullname)
-##
-##        if not os.path.exists(fullname):
-##            #raise e.FileError(fullname)
-##            if g.writeLog:
-##                WriteLogTxt(g.logFilename, LogWarning(e.FileError(fullname).message))
-##            return None
-##
-##        return fullname
-
     def value(self, joinID):
         #Lees de shapefile als dit nog niet was gebeurd.
         if self.shapefile:
@@ -452,6 +474,74 @@ class DBKMultiProp(DBKSamengesteldProp):
                         #buffer.append({self._dbkProp.name: self._dbkProp.value(sr)})
                         #buffer.append(self._dbkProp.value(sr))
                         buffer.append(super(DBKMultiProp, self).value(sr))
+                    return buffer
+                else:
+                    return None
+            else:
+                return None
+        else:
+            return None
+#-------------------------------------------------------------------------------
+# DBKMultiAdressenProp: Resulteert in een list gebaseerd op meerdere records
+#               in een shapefile, maar met meerdere nummers per adres in een list.
+class DBKMultiAdressenProp(DBKSamengesteldProp):
+    def __init__(self, name, location, shapefile, joinfield):
+        super(DBKMultiAdressenProp, self).__init__(name, location, shapefile)
+        self.joinfield = joinfield
+        self._fieldindex = None
+        self._shaperecords = dict()
+        self._propList = []
+        self._shapefileList = []
+        self._shapefileList.append(self.setShapefile(location, shapefile))
+
+    def setFieldindex(self, fields):
+        return None
+
+    def _read(self):
+        reader = shapefile.Reader(self.shapefile)
+
+        # Haal alleen de attribuutvelden op.
+        fields = reader.fields[1:]
+
+        # Bepaal bij de veldindex van het joinfield.
+        fldindex = FindField(fields, self.joinfield)
+
+        # Bepaal ook de veldindex van Property
+        # Zet de fieldindex op basis van de hier ingelezen shapefile en
+        # doe dit in de klasse SamengesteldProp.
+        super(DBKMultiAdressenProp, self).setFieldindex(fields)
+
+        # Zet de shaperecords in een dictionary met het joinID als key.
+        for sr in reader.shapeRecords():
+            joinID = sr.record[fldindex]
+            if joinID in self._shaperecords:
+                self._shaperecords[joinID].append(sr)
+            else:
+                self._shaperecords[joinID] = [sr]
+
+    def value(self, joinID):
+        #Lees de shapefile als dit nog niet was gebeurd.
+        if self.shapefile:
+            buffer = []
+            if len(self._shaperecords) == 0:
+                self._read()
+
+            #Als na het lezen nog geen records, dan was de shapefile leeg.
+            if len(self._shaperecords) > 0:
+                #Zoek de records met joinID
+                if joinID in self._shaperecords:
+                    shaperecords = self._shaperecords[joinID]
+                    for sr in shaperecords:
+                        nieuweReeks = True
+                        prop = dict()
+                        prop.update(super(DBKMultiAdressenProp, self).value(sr))
+                        if len(buffer) > 0:
+                            for d in buffer:
+                                if d['postcode'] == prop['postcode'] and d['straatnaam'] == prop['straatnaam'] and d['woonplaats'] == prop['woonplaats']:
+                                    d['nummers'].append(prop['nummers'][0])
+                                    nieuweReeks = False
+                        if nieuweReeks:
+                            buffer.append(super(DBKMultiAdressenProp, self).value(sr))
                     return buffer
                 else:
                     return None
@@ -511,53 +601,6 @@ class DBKVerblijfProp(DBKProp):
         else:
             return None
 
-###-------------------------------------------------------------------------------
-##class DBKVerblijfProp(DBKSamengesteldProp):
-##    def __init__(self, name, location, shapefile=None, fieldname=None, infofldname=None,
-##                 typegroep=None,
-##                 zelfredzaam=True,begintijd=None,eindtijd=None, doordeweeks=True):
-##        super(DBKVerblijfProp, self).__init__(name, location, shapefile, fieldname)
-##
-##        self.addProp(DBKConstProp("typeAanwezigheidsgroep", typegroep))
-##        self.addProp(DBKConstProp("tijdvakBegintijd", begintijd))
-##        self.addProp(DBKConstProp("tijdvakEindtijd", eindtijd))
-##        self.addProp(DBKConstProp("maandag", doordeweeks))
-##        self.addProp(DBKConstProp("dinsdag", doordeweeks))
-##        self.addProp(DBKConstProp("woensdag", doordeweeks))
-##        self.addProp(DBKConstProp("donderdag", doordeweeks))
-##        self.addProp(DBKConstProp("vrijdag", doordeweeks))
-##        self.addProp(DBKConstProp("zaterdag", not doordeweeks))
-##        self.addProp(DBKConstProp("zondag", not doordeweeks))
-##        self.addProp(DBKStrProp("bijzonderheden", location, shapefile, infofldname))
-##
-##
-##        self._zelfredzaam = zelfredzaam
-##
-##        self._aantal = DBKStrProp("aantal", location, shapefile, fieldname)
-##        if not zelfredzaam:
-##            self._aantalNZR = DBKStrProp("aantal", location, shapefile, fieldname)
-##
-##    def setFieldindex(self, fields):
-##        super(DBKVerblijfProp,self).setFieldindex(fields)
-##        self._aantal.setFieldindex(fields)
-##        if not self._zelfredzaam:
-##            self._aantalNZR.setFieldindex(fields)
-##
-##    def value(self, shaperecord):
-##        v = self._aantal.value(shaperecord)
-##        if v:
-##            verblijf = super(DBKVerblijfProp,self).value(shaperecord)
-##            verblijf.update({self._aantal.name: self._aantal.value(shaperecord)})
-##            if not self._zelfredzaam:
-##                verblijf.update({self._aantalNZR.name: self._aantalNZR.value(shaperecord)})
-##            else:
-##                verblijf.update({"aantalNietZelfredzaam": ""})
-##
-####            for item in self._constProps:
-####                verblijf.update({item.name: item.value})
-##            return verblijf
-##        else:
-##            return None
 
 #-------------------------------------------------------------------------------
 class DBKAdresProp(DBKSamengesteldProp):
@@ -607,7 +650,17 @@ class DBKAdresProp(DBKSamengesteldProp):
                     SplitsAdres(adres, adresProp)
         return adresProp
 
+#-------------------------------------------------------------------------------
+class DBKAdressenProp(DBKMultiAdressenProp):
+    def __init__(self, name, location, shapefile, joinfldname, straatfldname,
+                 huisnummerfldname, huisletterfldname, toevoegingfldname,
+                 postcodefldname,woonplaatsfldname):
+        super(DBKAdressenProp, self).__init__(name, location, shapefile, joinfldname)
 
+        self.addProp(DBKStrProp("straatnaam", location, shapefile, straatfldname))
+        self.addProp(DBKStrProp("postcode", location, shapefile, postcodefldname))
+        self.addProp(DBKStrProp("woonplaats", location, shapefile, woonplaatsfldname))
+        self.addProp(DBKMultiFieldListProp("nummers", location, shapefile, [huisnummerfldname, huisletterfldname, toevoegingfldname], "|"))
 
 #-------------------------------------------------------------------------------
 class DBKBinnendekCompProp(DBKSamengesteldProp):

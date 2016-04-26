@@ -24,9 +24,7 @@ global writeLog
 shpExt = ".shp"
 
 # Definieer hoe shapefilenamen zijn opgebouwd:
-# In hoodletters en met een spatie of een underscore tussen losse woorden
-#UPPERCASE = True
-#wordSeparator = "_"
+# In hoodletters en met een spatie en/of een underscore tussen losse woorden
 UPPERCASE = False
 wordSeparator = "_"
 
@@ -46,6 +44,7 @@ if UPPERCASE:
     TEKST = "TEKST" + shpExt
     AANRIJROUTE = "AANRIJROUTE" + shpExt
     DBK_OBJECT ="DBK" + wordSeparator + "OBJECT" + shpExt
+    ADRESSEN = "NEVENDBKADRES" + shpExt
 else:
     PAND = "Pand" + shpExt
     BRANDWEERVOORZIENING = "Brandweervoorziening" + shpExt
@@ -62,4 +61,4 @@ else:
     TEKST = "Teksten" + shpExt
     AANRIJROUTE = "Aanrijroute" + shpExt
     DBK_OBJECT ="DBK" + wordSeparator + "Object" + shpExt
-
+    ADRESSEN = "nevenDBKadres" + shpExt
