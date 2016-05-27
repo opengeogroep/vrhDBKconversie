@@ -200,11 +200,7 @@ def main():
                         DBKStrProp("OMSnummer", g.shapefileLocation, g.PAND, "OMS_NUMMER"),
                         DBKStrProp("inzetprocedure", g.shapefileLocation, g.PAND, "INZETPROCE"),
                         DBKConstProp("typeFeature", "Object"),
-                        DBKConstProp("verwerkt", None),
-                        DBKConstProp("hoofdobject", None),
-                        DBKConstProp("bouwlaag", None),
                         DBKStrProp("risicoklasse", g.shapefileLocation, g.PAND, "RISICOKLAS"),
-                        DBKConstProp("verdiepingen", 0),
                         DBKListProp("adres")
                           .addProp(DBKAdresProp("adres", g.shapefileLocation, g.PAND, "ADRES", "PLAATS")),
                         DBKListProp("adressen")
