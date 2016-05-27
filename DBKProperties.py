@@ -750,6 +750,7 @@ class DBKGevaarStofProp(DBKMultiProp):
         self.addProp(DBKIntProp("radius", location, shapefile, radiusfldname))
         self.addProp(DBKSymbProp("namespace", location, shapefile, typefldname, domein, "namespace"))
         self.addProp(DBKStrProp("aanvullendeInformatie", location, shapefile, infofldname))
+        self.addProp(DBKStrProp("ericKaart", location, shapefile, "ERIC_KAART"))
         self.addProp(DBKGeomProp())
 
 #-------------------------------------------------------------------------------
