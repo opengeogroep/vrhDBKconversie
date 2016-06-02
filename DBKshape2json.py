@@ -161,7 +161,7 @@ def main():
                         DBKStrProp("aanvalsplan", g.shapefileLocation, g.PAND, "AANVALSPLA"),
                         DBKStrProp("bijzonderheidAlgemeen", g.shapefileLocation, g.DBK_OBJECT, "BIJZONDERH"),
                         DBKStrProp("liften", g.shapefileLocation, g.PAND, "LIFTEN"),
-                        DBKStrProp("dakcontrstuctie", g.shapefileLocation, g.PAND, "DAKCONSTRU"),
+                        DBKStrProp("dakconstructie", g.shapefileLocation, g.PAND, "DAKCONSTRU"),
                         DBKStrProp("compartimenten", g.shapefileLocation, g.PAND, "COMPARTIME"),
                         DBKStrProp("bijzonderheidBouwkundig", g.shapefileLocation, g.PAND, "BIJZ_BOUWK"),
                         DBKStrProp("afsluiterGas", g.shapefileLocation, g.DBK_OBJECT, "AFSLUITER_"),
