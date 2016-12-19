@@ -99,7 +99,7 @@ def main():
                         DBKStrProp("identificatie", g.shapefileLocation, g.PAND, "DBK_OBJECT"),
                         DBKBoolProp("BHVaanwezig", g.shapefileLocation, g.PAND, "AANWEZIG_1"),
                         DBKDateProp("controleDatum", g.shapefileLocation, g.PAND, "LAATSTE_CO"),
-                        DBKStrProp("formeleNaam", g.shapefileLocation, g.PAND, "NAAM_PAND"),
+                        DBKStrProp("formeleNaam", g.shapefileLocation, g.DBK_OBJECT, "NAAM"),
                         DBKStrProp("informeleNaam", g.shapefileLocation, g.PAND, "INFORMELE_"),
                         DBKStrProp("OMSnummer", g.shapefileLocation, g.PAND, "OMS_NUMMER"),
                         DBKStrProp("inzetprocedure", g.shapefileLocation, g.PAND, "INZETPROCE"),
@@ -195,7 +195,7 @@ def main():
                         DBKStrProp("identificatie", g.shapefileLocation, g.PAND, "DBK_OBJECT"),
                         DBKBoolProp("BHVaanwezig", g.shapefileLocation, g.PAND, "AANWEZIG_1"),
                         DBKDateProp("controleDatum", g.shapefileLocation, g.PAND, "LAATSTE_CO"),
-                        DBKStrProp("formeleNaam", g.shapefileLocation, g.PAND, "NAAM_PAND"),
+                        DBKStrProp("formeleNaam", g.shapefileLocation, g.DBK_OBJECT, "NAAM"),
                         DBKStrProp("informeleNaam", g.shapefileLocation, g.PAND, "INFORMELE_"),
                         DBKStrProp("OMSnummer", g.shapefileLocation, g.PAND, "OMS_NUMMER"),
                         DBKStrProp("inzetprocedure", g.shapefileLocation, g.PAND, "INZETPROCE"),
@@ -240,6 +240,8 @@ def main():
             if isinstance(item, DBKProp):
                 if item.shapefilename == g.PAND:
                     item.setFieldindex(pandfields)
+                else:
+                    item.setFieldindex(dbkobjectfields)
 
         # Zet de hoofdpanden in een dictionary met het joinID als key.
         # We gaan ervan uit dat een DBKObject 1 hoofdpand heeft.
@@ -300,7 +302,11 @@ def main():
                         if type(item) is DBKConstProp:
                             dictDBKFeatProp.update({item.name: item.value})
                         else:
-                            dictDBKFeatProp.update({item.name: item.value(srHoofdpand)})
+                            if item.shapefilename == g.PAND:
+                                dictDBKFeatProp.update({item.name: item.value(srHoofdpand)})
+                            else:
+                                dictDBKFeatProp.update({item.name: item.value(srDBKObject)})
+
                 # Zet ook een gid aan de hand van de teller.
                 dictDBKFeatProp.update({"gid": teller})
 
