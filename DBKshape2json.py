@@ -197,7 +197,7 @@ def main():
                         DBKDateProp("controleDatum", g.shapefileLocation, g.PAND, "LAATSTE_CO"),
                         DBKStrProp("formeleNaam", g.shapefileLocation, g.DBK_OBJECT, "NAAM"),
                         DBKStrProp("informeleNaam", g.shapefileLocation, g.PAND, "INFORMELE_"),
-                        DBKStrProp("OMSnummer", g.shapefileLocation, g.PAND, "OMS_NUMMER"),
+                        DBKStrProp("OMSNummer", g.shapefileLocation, g.PAND, "OMS_NUMMER"),
                         DBKStrProp("inzetprocedure", g.shapefileLocation, g.PAND, "INZETPROCE"),
                         DBKConstProp("typeFeature", "Object"),
                         DBKStrProp("risicoklasse", g.shapefileLocation, g.PAND, "RISICOKLAS"),
