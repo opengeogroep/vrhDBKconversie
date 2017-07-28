@@ -188,6 +188,8 @@ def main():
                         DBKStrProp("WTSlocatie", g.shapefileLocation, g.DBK_OBJECT, "WTS_LOCATI"),
                         DBKListProp("adressen")
                           .addProp(DBKAdressenProp("adressen", g.shapefileLocation, g.ADRESSEN, "DBK_OBJECT", "STRAATNAAM", "HUISNUMMER", "HUISLETTER", "TOEVOEGING", "POSTCODE", "WOONPLAATS")),
+                        DBKStrProp("extraInfo", g.shapefileLocation, g.PAND, "Extra_Info"),
+                        DBKStrProp("extraInfo2", g.shapefileLocation, g.PAND, "Extra_In_1"),
         ]
 
         # Definieer DBKfeature properties
