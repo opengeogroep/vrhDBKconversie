@@ -190,6 +190,8 @@ def main():
                           .addProp(DBKAdressenProp("adressen", g.shapefileLocation, g.ADRESSEN, "DBK_OBJECT", "STRAATNAAM", "HUISNUMMER", "HUISLETTER", "TOEVOEGING", "POSTCODE", "WOONPLAATS")),
                         DBKStrProp("extraInfo", g.shapefileLocation, g.PAND, "Extra_Info"),
                         DBKStrProp("extraInfo2", g.shapefileLocation, g.PAND, "Extra_In_1"),
+                        DBKStrProp("Bron_EI_1", g.shapefileLocation, g.PAND, "Bron_EI_1"),
+                        DBKStrProp("Bron_EI_2", g.shapefileLocation, g.PAND, "Bron_EI_2"),
         ]
 
         # Definieer DBKfeature properties
