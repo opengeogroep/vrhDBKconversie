@@ -188,10 +188,14 @@ def main():
                         DBKStrProp("WTSlocatie", g.shapefileLocation, g.DBK_OBJECT, "WTS_LOCATI"),
                         DBKListProp("adressen")
                           .addProp(DBKAdressenProp("adressen", g.shapefileLocation, g.ADRESSEN, "DBK_OBJECT", "STRAATNAAM", "HUISNUMMER", "HUISLETTER", "TOEVOEGING", "POSTCODE", "WOONPLAATS")),
-                        DBKStrProp("extraInfo", g.shapefileLocation, g.PAND, "Extra_Info"),
+                        DBKStrProp("extraInfo1", g.shapefileLocation, g.PAND, "Extra_Info"),
                         DBKStrProp("extraInfo2", g.shapefileLocation, g.PAND, "Extra_In_1"),
-                        DBKStrProp("Bron_EI_1", g.shapefileLocation, g.PAND, "Bron_EI_1"),
-                        DBKStrProp("Bron_EI_2", g.shapefileLocation, g.PAND, "Bron_EI_2"),
+                        DBKStrProp("extraInfo1Bron", g.shapefileLocation, g.PAND, "Bron_EI_1"),
+                        DBKStrProp("extraInfo2Bron", g.shapefileLocation, g.PAND, "Bron_EI_2"),
+                        DBKStrProp("extraInfo1BeginDatum", g.shapefileLocation, g.PAND, "Datum_EI_1"),
+                        DBKStrProp("extraInfo2BeginDatum", g.shapefileLocation, g.PAND, "Datum_EI_2"),
+                        DBKStrProp("extraInfo1EindDatum", g.shapefileLocation, g.PAND, "Eind_Datum"),
+                        DBKStrProp("extraInfo2EindDatum", g.shapefileLocation, g.PAND, "Eind_Dat_1")
         ]
 
         # Definieer DBKfeature properties
